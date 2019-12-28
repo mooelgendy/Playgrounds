@@ -16,8 +16,6 @@ public class User implements Serializable {
     @Column(name = "ID")
     private Integer id;
 
-//    @Min(value = 3, message = "Name Must be more than 3 Characters")
-//    @Max(value = 50, message = "Name Must be less than 50 Characters")
     @NotNull
     @Column(name = "NAME")
     private String name;
@@ -46,20 +44,20 @@ public class User implements Serializable {
 
     @ManyToMany(cascade = { CascadeType.ALL })
     @JoinTable(name = "USER_TEAM",
-               joinColumns = { @JoinColumn(name = "ID") },
-               inverseJoinColumns = { @JoinColumn(name = "ID") })
+               joinColumns = { @JoinColumn(name = "USER_ID") },
+               inverseJoinColumns = { @JoinColumn(name = "TEAM_ID") })
     private Set<Team> teams = new HashSet<>();
 
     @ManyToMany(cascade = { CascadeType.ALL })
     @JoinTable(name = "USER_PHOTO",
-            joinColumns = { @JoinColumn(name = "ID") },
-            inverseJoinColumns = { @JoinColumn(name = "ID") })
+            joinColumns = { @JoinColumn(name = "USER_ID") },
+            inverseJoinColumns = { @JoinColumn(name = "PHOTO_ID") })
     private Set<Photo> photos = new HashSet<>();
 
     @ManyToMany(cascade = { CascadeType.ALL })
     @JoinTable(name = "USER_STORE",
-            joinColumns = { @JoinColumn(name = "ID") },
-            inverseJoinColumns = { @JoinColumn(name = "ID") })
+            joinColumns = { @JoinColumn(name = "USER_ID") },
+            inverseJoinColumns = { @JoinColumn(name = "STORE_ID") })
     private Set<Store> items = new HashSet<>();
 
     public User() {

@@ -36,22 +36,15 @@ public class Reservation implements Serializable {
     @JoinColumn(name = "PLAYGROUND_ID")
     private Playground playground;
 
-    @ManyToMany(cascade = { CascadeType.ALL })
-    @JoinTable(name = "RESERVATION_TEAM",
-            joinColumns = { @JoinColumn(name = "ID") },
-            inverseJoinColumns = { @JoinColumn(name = "ID") })
-    private Set<Team> reservedTeams = new HashSet<>();
-
     public Reservation() {
     }
 
-    public Reservation(@NotNull Date reservedTime, @NotNull String playersNeeded, @NotNull String hoursNumber, User user, Playground playground, Set<Team> reservedTeams) {
+    public Reservation(@NotNull Date reservedTime, @NotNull String playersNeeded, @NotNull String hoursNumber, User user, Playground playground) {
         this.ReservedTime = reservedTime;
         this.PlayersNeeded = playersNeeded;
         this.HoursNumber = hoursNumber;
         this.user = user;
         this.playground = playground;
-        this.reservedTeams = reservedTeams;
     }
 
     public Integer getId() {
@@ -96,13 +89,5 @@ public class Reservation implements Serializable {
 
     public void setPlayground(Playground playground) {
         this.playground = playground;
-    }
-
-    public Set<Team> getReservedTeams() {
-        return reservedTeams;
-    }
-
-    public void setReservedTeams(Set<Team> reservedTeams) {
-        this.reservedTeams = reservedTeams;
     }
 }

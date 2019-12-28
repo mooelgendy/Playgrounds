@@ -19,56 +19,65 @@ public class ReservationRepositoryImpl implements ReservationRepository {
 
     @Autowired
     public ReservationRepositoryImpl(EntityManager em) {
-        Assert.notNull(em, "EntityManager must not be null!");
         this.em = em;
     }
 
     @Override
     public List<Reservation> findAll() {
-        List<Reservation> reservations = em.createQuery("From Reservation", Reservation.class).getResultList();
-        Assert.notEmpty(reservations, "List is Empty");
+        List<Reservation> reservations = null;
+        try{
+            reservations = em.createQuery("From Reservation", Reservation.class).getResultList();
+            Assert.notEmpty(reservations, "List is Empty");
+        } catch(Exception ex){
+            System.out.println(ex.getMessage());
+        }
         return reservations;
     }
 
     @Override
     public Reservation findById(Integer id) {
-        Assert.notNull(id, "Reservation Id Must Not be Null!");
-        Reservation reservationById = em.find(Reservation.class, id);
-        Assert.notNull(reservationById, "Reservation Not Found!");
+        Reservation reservationById = null;
+        try{
+            Assert.notNull(id, "Reservation Id Must Not be Null!");
+            reservationById = em.find(Reservation.class, id);
+            Assert.notNull(reservationById, "Reservation Not Found!");
+        } catch(Exception ex){
+            System.out.println(ex.getMessage());
+        }
         return reservationById;
     }
 
     @Override
     public void save(Reservation reservation) {
-        Assert.notNull(reservation, "reservation You Want To Save Must Not be Null");
         try{
+            Assert.notNull(reservation, "reservation You Want To Save Must Not be Null");
             em.persist(reservation);
         } catch(Exception ex){
-            System.out.println(ex.toString());
+            System.out.println(ex.getMessage());
         }
     }
 
     @Override
     public void update(Reservation reservation) {
-        Assert.notNull(reservation, "reservation You Want To update is Not Found!");
         try{
+            Assert.notNull(reservation, "reservation You Want To update is Not Found!");
             em.merge(reservation);
         } catch(Exception ex){
-            System.out.println(ex.toString());
+            System.out.println(ex.getMessage());
         }
     }
 
     @Override
     public void delete(Reservation reservation) {
-        Assert.notNull(reservation, "reservation You Want To Delete Must Not be Null");
         try{
+            Assert.notNull(reservation, "reservation You Want To Delete Must Not be Null");
             if(em.contains(reservation)){
                 em.remove(reservation);
             }else {
                 throw new RuntimeException("reservation You Want To Delete is Not Found!");
             }
         } catch (Exception ex){
-            System.out.println(ex.toString());
+            System.out.println(ex.getMessage());
         }
     }
 }

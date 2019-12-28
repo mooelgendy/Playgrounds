@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface UserService {
 
-    List<User> getAll() throws RuntimeException;
+    List<User> getAll();
 
     User getOne(Integer id);
 

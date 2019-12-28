@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface PhotoService {
 
-    List<Photo> getAll() throws RuntimeException;
+    List<Photo> getAll();
 
     Photo getOne(Integer id);
 

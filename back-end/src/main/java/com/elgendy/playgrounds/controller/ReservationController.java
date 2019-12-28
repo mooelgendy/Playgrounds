@@ -19,75 +19,33 @@ public class ReservationController implements Serializable {
 
     @Autowired
     public ReservationController(ReservationService service) {
-        Assert.notNull(service, "service must not be null!");
         this.service = service;
     }
 
     @GetMapping("/")
     public List<Reservation> getAll(){
-        try {
-            List<Reservation> reservations = service.getAll();
-            return reservations;
-        }catch (Exception ex){
-            System.out.println(ex.toString());
-            return null;
-        }
+        List<Reservation> reservations = service.getAll();
+        return reservations;
     }
 
     @GetMapping("/{id}")
     public Reservation findOne(@PathVariable("id") Integer id){
-        try{
-            Reservation reservation1 = service.getOne(id);
-            return reservation1;
-        }catch (Exception ex){
-            System.out.println(ex.toString());
-            return null;
-        }
+        Reservation reservation = service.getOne(id);
+        return reservation;
     }
 
     @PostMapping("/")
-    public String create(@Valid @RequestBody Reservation reservation) {
-        try {
-            if (reservation == null) {
-                return "reservation You Want To Save Must not Be Null!";
-            } else if (reservation == service.getOne(reservation.getId())) {
-                return "reservation Is Already Exist";
-            }
-            service.add(reservation);
-            return "playground created successfully with id: " + reservation.getId().toString();
-        } catch (Exception ex) {
-            System.out.println(ex.toString());
-            return "Error in creating new reservation: " + ex.toString();
-        }
-
+    public void create(@Valid @RequestBody Reservation reservation) {
+        service.add(reservation);
     }
 
     @PutMapping("/")
-    public String update(@Valid @RequestBody Reservation reservation) {
-        try {
-            if (service.getOne(reservation.getId()) == null) {
-                return "reservation with id:" + reservation.getId().toString() + " is Not Found!";
-            }
-            service.update(reservation);
-            return "reservation with id:" + reservation.getId().toString() + " is updated successfully";
-        } catch (Exception ex) {
-            System.out.println(ex.toString());
-            return "Error in updating reservation: " + ex.toString();
-        }
+    public void update(@Valid @RequestBody Reservation reservation) {
+        service.update(reservation);
     }
 
-
     @DeleteMapping("/{id}")
-    public String delete(@PathVariable("id") Integer id) {
-        try {
-            if (service.getOne(id) == null) {
-                return "reservation with id:" + id.toString() + " is Not Found!";
-            }
-            service.delete(id);
-            return "reservation with id:" + id.toString() + " is deleted successfully";
-        } catch (Exception ex) {
-            System.out.println(ex.toString());
-            return "Error in deleting reservation: " + ex.toString();
-        }
+    public void delete(@PathVariable("id") Integer id) {
+        service.delete(id);
     }
 }

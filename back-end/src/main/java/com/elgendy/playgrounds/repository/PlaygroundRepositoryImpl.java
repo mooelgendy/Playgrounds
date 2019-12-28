@@ -19,56 +19,65 @@ public class PlaygroundRepositoryImpl implements PlaygroundRepository {
 
     @Autowired
     public PlaygroundRepositoryImpl(EntityManager em) {
-        Assert.notNull(em, "EntityManger Must not be null!");
         this.em = em;
     }
 
     @Override
     public List<Playground> findAll() {
-        List<Playground> playgrounds = em.createQuery("From Playground", Playground.class).getResultList();
-        Assert.notEmpty(playgrounds, "List is Empty");
+        List<Playground> playgrounds = null;
+        try{
+            playgrounds = em.createQuery("From Playground", Playground.class).getResultList();
+            Assert.notEmpty(playgrounds, "Playground's List is Empty");
+        } catch (Exception ex){
+            System.out.println(ex.getMessage());
+        }
         return playgrounds;
     }
 
     @Override
     public Playground findById(Integer id) {
-        Assert.notNull(id, "Playground Id Must Not be Null!");
-        Playground playgroundById = em.find(Playground.class, id);
-        Assert.notNull(playgroundById, "Playground Not Found!");
+        Playground playgroundById = null;
+        try{
+            Assert.notNull(id, "Playground Id Must Not be Null!");
+            playgroundById = em.find(Playground.class, id);
+            Assert.notNull(playgroundById, "Playground Not Found!");
+        } catch(Exception ex){
+            System.out.println(ex.getMessage());
+        }
         return playgroundById;
     }
 
     @Override
     public void save(Playground playground) {
-        Assert.notNull(playground, "Playground You Want To Save Must Not be Null");
         try{
+            Assert.notNull(playground, "Playground You Want To Save Must Not be Null");
             em.persist(playground);
         } catch(Exception ex){
-            System.out.println(ex.toString());
+            System.out.println(ex.getMessage());
         }
     }
 
     @Override
     public void update(Playground playground) {
-        Assert.notNull(playground, "Playground You Want To update is Not Found!");
         try{
+            Assert.notNull(playground, "Playground You Want To update is Not Found!");
             em.merge(playground);
         } catch(Exception ex){
-            System.out.println(ex.toString());
+            System.out.println(ex.getMessage());
         }
     }
 
     @Override
     public void delete(Playground playground) {
-        Assert.notNull(playground, "Playground You Want To Delete Must Not be Null");
         try{
+            Assert.notNull(playground, "Playground You Want To Delete Must Not be Null");
             if(em.contains(playground)){
                 em.remove(playground);
             }else {
                 throw new RuntimeException("Playground You Want To Delete is Not Found!");
             }
         } catch (Exception ex){
-            System.out.println(ex.toString());
+            System.out.println(ex.getMessage());
         }
     }
 }

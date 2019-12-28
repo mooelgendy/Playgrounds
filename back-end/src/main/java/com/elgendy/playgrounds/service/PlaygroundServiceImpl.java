@@ -15,61 +15,34 @@ public class PlaygroundServiceImpl implements PlaygroundService {
 
     @Autowired
     public PlaygroundServiceImpl(PlaygroundRepository repository) {
-        Assert.notNull(repository, "Repository must not be null!");
         this.repository = repository;
     }
 
     @Override
-    public List<Playground> getAll() throws RuntimeException {
-        try {
-            List<Playground> playgroundList = repository.findAll();
-            return playgroundList;
-        } catch (Exception ex) {
-            System.out.println(ex.toString());
-            return null;
-        }
+    public List<Playground> getAll() {
+        List<Playground> playgroundList = repository.findAll();
+        return playgroundList;
     }
 
     @Override
     public Playground getOne(Integer id) {
-        try {
-            Playground playgroundById = repository.findById(id);
-            return playgroundById;
-        }catch (Exception ex){
-            System.out.println(ex.toString());
-            return null;
-        }
+        Playground playgroundById = repository.findById(id);
+        return playgroundById;
     }
 
     @Override
     public void add(Playground playground) {
-        Assert.notNull(playground, "Playground You Want To Save Must Not be Null!");
-        try {
-            repository.save(playground);
-        }catch (Exception ex){
-            System.out.println(ex.toString());
-        }
+        repository.save(playground);
     }
 
     @Override
     public void update(Playground playground) {
-        Assert.notNull(playground, "playground You Want To Update Must Not be Null!");
-        try {
-            repository.update(playground);
-        }catch (Exception ex){
-            System.out.println(ex.toString());
-        }
+        repository.update(playground);
     }
 
     @Override
     public void delete(Integer id) {
-        Assert.notNull(id, "Playground Id Must Not be Null!");
-        try {
-            Playground deletedPlayground = repository.findById(id);
-            Assert.notNull(deletedPlayground, "Playground You Want To Delete is Not Found!");
-            repository.delete(deletedPlayground);
-        } catch (Exception ex) {
-            System.out.println(ex.toString());
-        }
+        Playground deletedPlayground = repository.findById(id);
+        repository.delete(deletedPlayground);
     }
 }

@@ -15,61 +15,34 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Autowired
     public ReservationServiceImpl(ReservationRepository repository) {
-        Assert.notNull(repository, "Repository must not be null!");
         this.repository = repository;
     }
 
     @Override
-    public List<Reservation> getAll() throws RuntimeException {
-        try {
-            List<Reservation> reservationList = repository.findAll();
-            return reservationList;
-        } catch (Exception ex) {
-            System.out.println(ex.toString());
-            return null;
-        }
+    public List<Reservation> getAll() {
+        List<Reservation> reservationList = repository.findAll();
+        return reservationList;
     }
 
     @Override
     public Reservation getOne(Integer id) {
-        try {
-            Reservation reservationById = repository.findById(id);
-            return reservationById;
-        }catch (Exception ex){
-            System.out.println(ex.toString());
-            return null;
-        }
+        Reservation reservationById = repository.findById(id);
+        return reservationById;
     }
 
     @Override
     public void add(Reservation reservation) {
-        Assert.notNull(reservation, "reservation You Want To Save Must Not be Null!");
-        try {
-            repository.save(reservation);
-        }catch (Exception ex){
-            System.out.println(ex.toString());
-        }
+        repository.save(reservation);
     }
 
     @Override
     public void update(Reservation reservation) {
-        Assert.notNull(reservation, "reservation You Want To Update Must Not be Null!");
-        try {
-            repository.update(reservation);
-        }catch (Exception ex){
-            System.out.println(ex.toString());
-        }
+        repository.update(reservation);
     }
 
     @Override
     public void delete(Integer id) {
-        Assert.notNull(id, "Reservation Id Must Not be Null!");
-        try {
-            Reservation deletedReservation = repository.findById(id);
-            Assert.notNull(deletedReservation, "Reservation You Want To Delete is Not Found!");
-            repository.delete(deletedReservation);
-        } catch (Exception ex) {
-            System.out.println(ex.toString());
-        }
+        Reservation deletedReservation = repository.findById(id);
+        repository.delete(deletedReservation);
     }
 }

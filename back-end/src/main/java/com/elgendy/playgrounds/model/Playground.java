@@ -28,10 +28,10 @@ public class Playground implements Serializable {
     private String phone;
 
     @Column(name = "AREA")
-    private String Area;
+    private String area;
 
     @Column(name = "AVAILABLE_TIME")
-    private String AvailableTime;
+    private String availableTime;
 
     @Column(name = "PRICE_PER_HOUR")
     private String pricePerHour;
@@ -44,8 +44,8 @@ public class Playground implements Serializable {
         this.address = address;
         this.description = description;
         this.phone = phone;
-        Area = area;
-        AvailableTime = availableTime;
+        this.area = area;
+        this.availableTime = availableTime;
         this.pricePerHour = pricePerHour;
     }
 
@@ -86,19 +86,19 @@ public class Playground implements Serializable {
     }
 
     public String getArea() {
-        return Area;
+        return area;
     }
 
     public void setArea(String area) {
-        Area = area;
+        this.area = area;
     }
 
     public String getAvailableTime() {
-        return AvailableTime;
+        return availableTime;
     }
 
     public void setAvailableTime(String availableTime) {
-        AvailableTime = availableTime;
+        this.availableTime = availableTime;
     }
 
     public String getPricePerHour() {

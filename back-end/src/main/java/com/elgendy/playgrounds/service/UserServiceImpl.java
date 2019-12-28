@@ -15,62 +15,34 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     public UserServiceImpl(UserRepository repository) {
-        Assert.notNull(repository, "repository must not be null!");
         this.repository = repository;
     }
 
     @Override
-    public List<User> getAll() throws RuntimeException{
-        try {
-            List<User> userList = repository.findAll();
-            return userList;
-        } catch (Exception ex) {
-            System.out.println(ex.toString());
-            return null;
-        }
+    public List<User> getAll(){
+        List<User> userList = repository.findAll();
+        return userList;
     }
 
     @Override
     public User getOne(Integer id) {
-        Assert.notNull(id, "User Id Must Not be Null!");
-        try {
-            User userById = repository.findById(id);
-            return userById;
-        }catch (Exception ex){
-            System.out.println(ex.toString());
-            return null;
-        }
+        User userById = repository.findById(id);
+        return userById;
     }
 
     @Override
     public void add(User user) {
-        Assert.notNull(user, "User You Want To Save Must Not be Null!");
-        try {
-            repository.save(user);
-        }catch (Exception ex){
-            System.out.println(ex.toString());
-        }
+        repository.save(user);
     }
 
     @Override
     public void update(User user) {
-        Assert.notNull(user, "User You Want To Update Must Not be Null!");
-        try {
-            repository.update(user);
-        }catch (Exception ex){
-            System.out.println(ex.toString());
-        }
+        repository.update(user);
     }
 
     @Override
     public void delete(Integer id) {
-        Assert.notNull(id, "User Id Must Not be Null!");
-        try {
-            User deletedUser = repository.findById(id);
-            Assert.notNull(deletedUser, "User You Want To Delete is Not Found!");
-            repository.delete(deletedUser);
-        } catch (Exception ex) {
-            System.out.println(ex.toString());
-        }
+        User deletedUser = repository.findById(id);
+        repository.delete(deletedUser);
     }
 }

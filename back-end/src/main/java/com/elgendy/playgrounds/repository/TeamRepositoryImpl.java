@@ -19,56 +19,65 @@ public class TeamRepositoryImpl implements TeamRepository {
 
     @Autowired
     public TeamRepositoryImpl(EntityManager em) {
-        Assert.notNull(em, "EntityManager must not be null!");
         this.em = em;
     }
 
     @Override
     public List<Team> findAll() {
-        List<Team> teams = em.createQuery("From Team", Team.class).getResultList();
-        Assert.notEmpty(teams, "List is Empty");
+        List<Team> teams = null;
+        try{
+            teams = em.createQuery("From Team", Team.class).getResultList();
+            Assert.notEmpty(teams, "Team's List is Empty");
+        } catch (Exception ex){
+            System.out.println(ex.getMessage());
+        }
         return teams;
     }
 
     @Override
     public Team findById(Integer id) {
-        Assert.notNull(id, "Team Id Must Not be Null!");
-        Team teamById = em.find(Team.class, id);
-        Assert.notNull(teamById, "Team Not Found!");
+        Team teamById = null;
+        try{
+            Assert.notNull(id, "Team Id Must Not be Null!");
+            teamById = em.find(Team.class, id);
+            Assert.notNull(teamById, "Team Not Found!");
+        } catch (Exception ex){
+            System.out.println(ex.getMessage());
+        }
         return teamById;
     }
 
     @Override
     public void save(Team team) {
-        Assert.notNull(team, "Team You Want To Save Must Not be Null");
         try{
+            Assert.notNull(team, "Team You Want To Save Must Not be Null");
             em.persist(team);
         } catch(Exception ex){
-            System.out.println(ex.toString());
+            System.out.println(ex.getMessage());
         }
     }
 
     @Override
     public void update(Team team) {
-        Assert.notNull(team, "Team You Want To update is Not Found!");
         try{
+            Assert.notNull(team, "Team You Want To update is Not Found!");
             em.merge(team);
         } catch(Exception ex){
-            System.out.println(ex.toString());
+            System.out.println(ex.getMessage());
         }
     }
 
     @Override
     public void delete(Team team) {
-        Assert.notNull(team, "Team You Want To Delete Must Not be Null");
         try{
+            Assert.notNull(team, "Team You Want To Delete Must Not be Null");
             if(em.contains(team)){
                 em.remove(team);
             }else {
                 throw new RuntimeException("Team You Want To Delete is Not Found!");
             }
         } catch (Exception ex){
-            System.out.println(ex.toString());
+            System.out.println(ex.getMessage());
         }
     }
 }

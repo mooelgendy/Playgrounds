@@ -15,61 +15,34 @@ public class PhotoServiceImpl implements PhotoService {
 
     @Autowired
     public PhotoServiceImpl(PhotoRepository repository) {
-        Assert.notNull(repository, "Repository must not be null!");
         this.repository = repository;
     }
 
     @Override
-    public List<Photo> getAll() throws RuntimeException {
-        try {
-            List<Photo> photoList = repository.findAll();
-            return photoList;
-        } catch (Exception ex) {
-            System.out.println(ex.toString());
-            return null;
-        }
+    public List<Photo> getAll() {
+        List<Photo> photoList = repository.findAll();
+        return photoList;
     }
 
     @Override
     public Photo getOne(Integer id) {
-        try {
-            Photo photoById = repository.findById(id);
-            return photoById;
-        }catch (Exception ex){
-            System.out.println(ex.toString());
-            return null;
-        }
+        Photo photoById = repository.findById(id);
+        return photoById;
     }
 
     @Override
     public void add(Photo photo) {
-        Assert.notNull(photo, "photo You Want To Save Must Not be Null!");
-        try {
-            repository.save(photo);
-        }catch (Exception ex){
-            System.out.println(ex.toString());
-        }
+        repository.save(photo);
     }
 
     @Override
     public void update(Photo photo) {
-        Assert.notNull(photo, "photo You Want To Update Must Not be Null!");
-        try {
-            repository.update(photo);
-        }catch (Exception ex){
-            System.out.println(ex.toString());
-        }
+        repository.update(photo);
     }
 
     @Override
     public void delete(Integer id) {
-        Assert.notNull(id, "Photo Id Must Not be Null!");
-        try {
-            Photo deletedPhoto = repository.findById(id);
-            Assert.notNull(deletedPhoto, "Photo You Want To Delete is Not Found!");
-            repository.delete(deletedPhoto);
-        } catch (Exception ex) {
-            System.out.println(ex.toString());
-        }
+        Photo deletedPhoto = repository.findById(id);
+        repository.delete(deletedPhoto);
     }
 }

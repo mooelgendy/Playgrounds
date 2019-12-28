@@ -35,21 +35,16 @@ public class Team implements Serializable {
     @ManyToMany(mappedBy = "teams")
     private Set<User> users = new HashSet<>();
 
-    @ManyToMany(mappedBy = "reservedTeams")
-    private Set<Reservation> reservations = new HashSet<>();
-
-
     public Team() {
     }
 
-    public Team(@NotNull String name, @NotNull String address, String bio, String profilePhoto, String coverPhoto, Set<User> users, Set<Reservation> reservations) {
+    public Team(@NotNull String name, @NotNull String address, String bio, String profilePhoto, String coverPhoto, Set<User> users) {
         this.name = name;
         this.address = address;
         this.bio = bio;
         this.profilePhoto = profilePhoto;
         this.coverPhoto = coverPhoto;
         this.users = users;
-        this.reservations = reservations;
     }
 
     public Integer getId() {
@@ -104,11 +99,4 @@ public class Team implements Serializable {
         this.users = users;
     }
 
-    public Set<Reservation> getReservations() {
-        return reservations;
-    }
-
-    public void setReservations(Set<Reservation> reservations) {
-        this.reservations = reservations;
-    }
 }

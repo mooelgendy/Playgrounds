@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface PlaygroundService {
 
-    List<Playground> getAll() throws RuntimeException;
+    List<Playground> getAll();
 
     Playground getOne(Integer id);
 

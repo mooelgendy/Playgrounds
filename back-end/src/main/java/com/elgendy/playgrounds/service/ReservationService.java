@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ReservationService {
 
-    List<Reservation> getAll() throws RuntimeException;
+    List<Reservation> getAll();
 
     Reservation getOne(Integer id);
 

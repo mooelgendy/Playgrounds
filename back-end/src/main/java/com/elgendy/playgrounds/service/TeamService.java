@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface TeamService {
 
-    List<Team> getAll() throws RuntimeException;
+    List<Team> getAll();
 
     Team getOne(Integer id);
 
