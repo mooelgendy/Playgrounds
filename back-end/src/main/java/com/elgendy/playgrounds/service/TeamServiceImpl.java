@@ -4,7 +4,6 @@ import com.elgendy.playgrounds.model.Team;
 import com.elgendy.playgrounds.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
 
 import java.util.List;
 

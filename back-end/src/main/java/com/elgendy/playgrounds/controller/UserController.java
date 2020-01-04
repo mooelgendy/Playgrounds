@@ -3,12 +3,10 @@ package com.elgendy.playgrounds.controller;
 import com.elgendy.playgrounds.model.User;
 import com.elgendy.playgrounds.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)

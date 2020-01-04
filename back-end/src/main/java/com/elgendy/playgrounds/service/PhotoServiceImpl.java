@@ -4,7 +4,6 @@ import com.elgendy.playgrounds.model.Photo;
 import com.elgendy.playgrounds.repository.PhotoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
 
 import java.util.List;
 

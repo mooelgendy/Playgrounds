@@ -4,7 +4,6 @@ import com.elgendy.playgrounds.model.User;
 import com.elgendy.playgrounds.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
 
 import java.util.List;
 
