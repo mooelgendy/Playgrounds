@@ -3,7 +3,6 @@ package com.elgendy.playgrounds.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -27,19 +26,24 @@ public class Store implements Serializable {
 
     @Column(name = "QUANTITY")
     private Integer quantity;
-
-    @ManyToMany(mappedBy = "items")
-    private Set<User> users = new HashSet<>();
+    
+    @OneToMany(mappedBy="store")
+    private Set<Photo> photos;
+    
+    @ManyToOne
+    @JoinColumn(name="ID", nullable=false)
+    private User user;
 
     public Store() {
     }
 
-    public Store(@NotNull String name, String description, String price, Integer quantity, Set<User> users) {
+    public Store(@NotNull String name, String description, String price, Integer quantity, User user, Set<Photo> photos) {
         this.name = name;
         this.description = description;
         this.price = price;
         this.quantity = quantity;
-        this.users = users;
+        this.user = user;
+        this.photos = photos;
     }
 
     public Integer getId() {
@@ -78,11 +82,19 @@ public class Store implements Serializable {
         this.quantity = quantity;
     }
 
-    public Set<User> getUsers() {
-        return users;
+    public User getUser() {
+        return user;
     }
 
-    public void setUsers(Set<User> users) {
-        this.users = users;
+    public void setUser(User user) {
+        this.user = user;
     }
+
+	public Set<Photo> getPhotos() {
+		return photos;
+	}
+
+	public void setPhotos(Set<Photo> photos) {
+		this.photos = photos;
+	}
 }

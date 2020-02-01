@@ -3,6 +3,8 @@ package com.elgendy.playgrounds.controller;
 import com.elgendy.playgrounds.model.DTO.PhotoDTO;
 import com.elgendy.playgrounds.model.Photo;
 import com.elgendy.playgrounds.service.PhotoService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +21,7 @@ public class PhotoController implements Serializable {
 
     private PhotoService service;
 
+    @Autowired
     public PhotoController(PhotoService service) {
         this.service = service;
     }

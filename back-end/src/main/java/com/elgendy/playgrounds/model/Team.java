@@ -32,19 +32,23 @@ public class Team implements Serializable {
     @Column(name = "COVER_PHOTO")
     private String coverPhoto;
 
+    @OneToMany(mappedBy="team")
+    private Set<Photo> photos;
+    
     @ManyToMany(mappedBy = "teams")
-    private Set<User> users = new HashSet<>();
+    private Set<User> users;
 
     public Team() {
     }
 
-    public Team(@NotNull String name, @NotNull String address, String bio, String profilePhoto, String coverPhoto, Set<User> users) {
+    public Team(@NotNull String name, @NotNull String address, String bio, String profilePhoto, String coverPhoto, Set<User> users, Set<Photo> photos) {
         this.name = name;
         this.address = address;
         this.bio = bio;
         this.profilePhoto = profilePhoto;
         this.coverPhoto = coverPhoto;
         this.users = users;
+        this.photos = photos;
     }
 
     public Integer getId() {
@@ -99,4 +103,11 @@ public class Team implements Serializable {
         this.users = users;
     }
 
+	public Set<Photo> getPhotos() {
+		return photos;
+	}
+
+	public void setPhotos(Set<Photo> photos) {
+		this.photos = photos;
+	}
 }

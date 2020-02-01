@@ -3,15 +3,12 @@ package com.elgendy.playgrounds.repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import com.elgendy.playgrounds.model.Store;
-import org.springframework.util.Assert;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
-@Transactional
 public class StoreRepositoryImpl implements StoreRepository{
 
     @PersistenceContext
@@ -27,7 +24,6 @@ public class StoreRepositoryImpl implements StoreRepository{
         List<Store> items = null;
         try{
             items = em.createQuery("From Store", Store.class).getResultList();
-            Assert.notEmpty(items, "Item's List is Empty");
         } catch (Exception ex){
             System.out.println(ex.getMessage());
         }
@@ -38,9 +34,7 @@ public class StoreRepositoryImpl implements StoreRepository{
     public Store findById(Integer id) {
         Store itemById = null;
         try{
-            Assert.notNull(id, "Item Id Must Not be Null!");
             itemById = em.find(Store.class, id);
-            Assert.notNull(itemById, "Item Not Found!");
         } catch(Exception ex){
             System.out.println(ex.getMessage());
         }
@@ -50,7 +44,6 @@ public class StoreRepositoryImpl implements StoreRepository{
     @Override
     public void save(Store item) {
         try{
-            Assert.notNull(item, "Item You Want To Save Must Not be Null");
             em.persist(item);
         } catch(Exception ex){
             System.out.println(ex.getMessage());
@@ -60,7 +53,6 @@ public class StoreRepositoryImpl implements StoreRepository{
     @Override
     public void update(Store item) {
         try{
-            Assert.notNull(item, "Item You Want To update is Not Found!");
             em.merge(item);
         } catch(Exception ex){
             System.out.println(ex.getMessage());
@@ -70,7 +62,6 @@ public class StoreRepositoryImpl implements StoreRepository{
     @Override
     public void delete(Store item) {
         try{
-            Assert.notNull(item, "Item You Want To Delete Must Not be Null");
             if(em.contains(item)){
                 em.remove(item);
             }else {

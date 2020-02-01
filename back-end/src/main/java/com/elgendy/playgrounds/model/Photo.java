@@ -22,16 +22,29 @@ public class Photo implements Serializable {
     @Column(name = "Link")
     private String link;
 
-    @ManyToMany(mappedBy = "photos")
-    private Set<User> users = new HashSet<>();
+    @ManyToOne
+    @JoinColumn(name="ID", nullable=false)
+    private User user;
+    
+    @ManyToOne
+    @JoinColumn(name="ID", nullable=false)
+    private Team team;
+    
+    @ManyToOne
+    @JoinColumn(name="ID", nullable=false)
+    private Store store;
+    
+    @ManyToOne
+    @JoinColumn(name="ID", nullable=false)
+    private Playground playground;
 
     public Photo() {
     }
 
-    public Photo(String name, @NotNull String link, Set<User> users) {
+    public Photo(String name, @NotNull String link, User user) {
         this.name = name;
         this.link = link;
-        this.users = users;
+        this.user = user;
     }
 
     public Integer getId() {
@@ -54,11 +67,11 @@ public class Photo implements Serializable {
         this.link = link;
     }
 
-    public Set<User> getUsers() {
-        return users;
+    public User getUser() {
+        return user;
     }
 
-    public void setUsers(Set<User> users) {
-        this.users = users;
+    public void setUser(User user) {
+        this.user = user;
     }
 }

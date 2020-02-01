@@ -3,6 +3,7 @@ package com.elgendy.playgrounds.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 @Table(name = "PLAYGROUND")
@@ -35,11 +36,17 @@ public class Playground implements Serializable {
 
     @Column(name = "PRICE_PER_HOUR")
     private String pricePerHour;
+    
+    @OneToMany(mappedBy="playground")
+    private Set<Photo> photos;
+    
+    @OneToMany(mappedBy="playground")
+    private Set<Reservation> reservations;
 
     public Playground() {
     }
 
-    public Playground(@NotNull String name, @NotNull String address, String description, String phone, String area, String availableTime, String pricePerHour) {
+    public Playground(@NotNull String name, @NotNull String address, String description, String phone, String area, String availableTime, String pricePerHour, Set<Photo> photos, Set<Reservation> reservations) {
         this.name = name;
         this.address = address;
         this.description = description;
@@ -47,6 +54,8 @@ public class Playground implements Serializable {
         this.area = area;
         this.availableTime = availableTime;
         this.pricePerHour = pricePerHour;
+        this.photos = photos;
+        this.reservations = reservations;
     }
 
     public Integer getId() {
@@ -108,4 +117,20 @@ public class Playground implements Serializable {
     public void setPricePerHour(String pricePerHour) {
         this.pricePerHour = pricePerHour;
     }
+
+	public Set<Photo> getPhotos() {
+		return photos;
+	}
+
+	public void setPhotos(Set<Photo> photos) {
+		this.photos = photos;
+	}
+
+	public Set<Reservation> getReservations() {
+		return reservations;
+	}
+
+	public void setReservations(Set<Reservation> reservations) {
+		this.reservations = reservations;
+	}
 }

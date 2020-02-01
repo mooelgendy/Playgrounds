@@ -42,28 +42,29 @@ public class User implements Serializable {
     @Column(name = "COVER_PHOTO")
     private String coverPhoto;
 
-    @ManyToMany(cascade = { CascadeType.ALL })
+    @ManyToMany(cascade	 = { CascadeType.ALL })
     @JoinTable(name = "USER_TEAM",
                joinColumns = { @JoinColumn(name = "USER_ID") },
                inverseJoinColumns = { @JoinColumn(name = "TEAM_ID") })
-    private Set<Team> teams = new HashSet<>();
+    private Set<Team> teams;
 
-    @ManyToMany(cascade = { CascadeType.ALL })
-    @JoinTable(name = "USER_PHOTO",
-            joinColumns = { @JoinColumn(name = "USER_ID") },
-            inverseJoinColumns = { @JoinColumn(name = "PHOTO_ID") })
-    private Set<Photo> photos = new HashSet<>();
+    @OneToMany(mappedBy="user")
+    private Set<Photo> photos;
+    
+    @ManyToOne
+    @JoinColumn(name="ID", nullable=false)
+    private Reservation reservation;
 
-    @ManyToMany(cascade = { CascadeType.ALL })
-    @JoinTable(name = "USER_STORE",
-            joinColumns = { @JoinColumn(name = "USER_ID") },
-            inverseJoinColumns = { @JoinColumn(name = "STORE_ID") })
-    private Set<Store> items = new HashSet<>();
+    @OneToMany(mappedBy="user")
+    private Set<Store> items;
+    
+    @OneToMany(mappedBy="user")
+    private Set<Invitation> invitations;
 
     public User() {
     }
 
-    public User(@NotNull String name, @NotNull String address, String position, String phone, String bio, Date chosenTime, String profilePhoto, String coverPhoto, Set<Team> teams, Set<Photo> photos, Set<Store> items) {
+    public User(@NotNull String name, @NotNull String address, String position, String phone, String bio, Date chosenTime, String profilePhoto, String coverPhoto, Set<Team> teams, Set<Photo> photos, Set<Store> items, Reservation reservation, Set<Invitation> invitations) {
         this.name = name;
         this.address = address;
         this.position = position;
@@ -75,6 +76,8 @@ public class User implements Serializable {
         this.teams = teams;
         this.photos = photos;
         this.items = items;
+        this.reservation = reservation;
+        this.invitations = invitations;
     }
 
     public Integer getId() {
@@ -168,4 +171,20 @@ public class User implements Serializable {
     public void setItems(Set<Store> items) {
         this.items = items;
     }
+
+	public Reservation getReservation() {
+		return reservation;
+	}
+
+	public void setReservation(Reservation reservation) {
+		this.reservation = reservation;
+	}
+
+	public Set<Invitation> getInvitations() {
+		return invitations;
+	}
+
+	public void setInvitations(Set<Invitation> invitations) {
+		this.invitations = invitations;
+	}
 }

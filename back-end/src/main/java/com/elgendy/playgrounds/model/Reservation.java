@@ -4,6 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name = "RESERVATION")
@@ -26,23 +27,26 @@ public class Reservation implements Serializable {
     @Column(name = "HOURS_NUMBER")
     private String HoursNumber;
 
+    @OneToMany(mappedBy="reservation")
+    private Set<User> users;
+    
     @ManyToOne
-    @JoinColumn(name = "USER_ID")
-    private User user;
-
-    @ManyToOne
-    @JoinColumn(name = "PLAYGROUND_ID")
+    @JoinColumn(name = "ID", nullable = false)
     private Playground playground;
+    
+    @OneToMany(mappedBy="reservation")
+    private Set<Invitation> invitations;
 
     public Reservation() {
     }
 
-    public Reservation(@NotNull Date reservedTime, @NotNull String playersNeeded, @NotNull String hoursNumber, User user, Playground playground) {
+    public Reservation(@NotNull Date reservedTime, @NotNull String playersNeeded, @NotNull String hoursNumber, Set<User> users, Playground playground, Set<Invitation> invitations) {
         this.ReservedTime = reservedTime;
         this.PlayersNeeded = playersNeeded;
         this.HoursNumber = hoursNumber;
-        this.user = user;
+        this.users = users;
         this.playground = playground;
+        this.invitations = invitations;
     }
 
     public Integer getId() {
@@ -73,19 +77,27 @@ public class Reservation implements Serializable {
         HoursNumber = hoursNumber;
     }
 
-    public User getUser() {
-        return user;
-    }
+    public Set<User> getUsers() {
+		return users;
+	}
 
-    public void setUser(User user) {
-        this.user = user;
-    }
+	public void setUsers(Set<User> users) {
+		this.users = users;
+	}
 
-    public Playground getPlayground() {
+	public Playground getPlayground() {
         return playground;
     }
 
     public void setPlayground(Playground playground) {
         this.playground = playground;
     }
+
+	public Set<Invitation> getInvitations() {
+		return invitations;
+	}
+
+	public void setInvitations(Set<Invitation> invitations) {
+		this.invitations = invitations;
+	}
 }
