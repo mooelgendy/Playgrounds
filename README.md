@@ -11,9 +11,7 @@ Technology stack used in this web application:
 - Spring annotations
 - RESTful Web Service
 - Angular Framework
-- Bootstrap forms
+- Bootstrap
 - Mysql DataBase
-- Relational Database
 - Hibernate
-- CRUD Operations
 - Maven Build tool
