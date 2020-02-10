@@ -1,5 +1,3 @@
-[![Quality Gate Status](http://localhost:9000/api/project_badges/measure?project=com.elgendy%3Aplaygrounds&metric=alert_status)](http://localhost:9000/dashboard?id=com.elgendy%3Aplaygrounds)
-
 # Playgrounds
 Web application for reserving sports playgrounds and sports services. 
 By this web application you can find people to play with, playground location, create competitions, 
@@ -15,3 +13,9 @@ Technology stack used in this web application:
 - Mysql DataBase
 - Hibernate
 - Maven Build tool
+
+
+Supported by JetBrains <3 .
+<p align="left">
+  <img src="https://www.jetbrains.com/company/brand/img/jetbrains_logo.png" width="100" title="JetBrains">
+</p>
