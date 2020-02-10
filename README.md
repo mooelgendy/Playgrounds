@@ -15,7 +15,7 @@ Technology stack used in this web application:
 - Maven Build tool
 
 
-Supported by JetBrains <3 .
+Special thanks for JetBrains organization for their support <3 .
 
 <a href="https://www.jetbrains.com/?from=Playgrounds">
 <img src="https://www.jetbrains.com/company/brand/img/jetbrains_logo.png" width="100" title="JetBrains">
