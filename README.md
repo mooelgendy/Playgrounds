@@ -16,6 +16,7 @@ Technology stack used in this web application:
 
 
 Supported by JetBrains <3 .
-<p align="left">
-  <img src="https://www.jetbrains.com/company/brand/img/jetbrains_logo.png" width="100" title="JetBrains">
-</p>
+
+<a href="https://www.jetbrains.com/?from=Playgrounds">
+<img src="https://www.jetbrains.com/company/brand/img/jetbrains_logo.png" width="100" title="JetBrains">
+</a>
