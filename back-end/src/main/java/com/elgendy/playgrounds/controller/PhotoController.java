@@ -64,6 +64,7 @@ public class PhotoController implements Serializable {
     @ResponseStatus(HttpStatus.OK)
     public void update(@Valid @RequestBody PhotoDTO dto) {
         Photo photo = new Photo();
+        photo.setId(dto.getId());
         photo.setName(dto.getName());
         photo.setLink(dto.getLink());
         service.update(photo);

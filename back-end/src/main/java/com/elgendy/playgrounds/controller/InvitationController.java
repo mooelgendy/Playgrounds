@@ -72,6 +72,7 @@ public class InvitationController {
     @ResponseStatus(HttpStatus.OK)
     public void update(@Valid @RequestBody InvitationDTO dto) {
     	Invitation invitation = new Invitation();
+    	invitation.setId(dto.getId());
     	invitation.setName(dto.getName());
     	invitation.setDate(dto.getDate());
     	invitation.setExpiryDate(dto.getExpiryDate());

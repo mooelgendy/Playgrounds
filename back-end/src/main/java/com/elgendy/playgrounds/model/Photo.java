@@ -3,8 +3,6 @@ package com.elgendy.playgrounds.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "PHOTO")
@@ -45,6 +43,10 @@ public class Photo implements Serializable {
         this.name = name;
         this.link = link;
         this.user = user;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public Integer getId() {

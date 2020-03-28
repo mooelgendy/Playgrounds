@@ -51,6 +51,10 @@ public class Team implements Serializable {
         this.photos = photos;
     }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     public Integer getId() {
         return id;
     }

@@ -78,6 +78,7 @@ public class PlaygroundController implements Serializable {
     @ResponseStatus(HttpStatus.OK)
     public void update(@Valid @RequestBody PlaygroundDTO dto) {
         Playground playground = new Playground();
+        playground.setId(dto.getId());
         playground.setName(dto.getName());
         playground.setAddress(dto.getAddress());
         playground.setArea(dto.getArea());
@@ -85,7 +86,6 @@ public class PlaygroundController implements Serializable {
         playground.setDescription(dto.getDescription());
         playground.setPricePerHour(dto.getPricePerHour());
         playground.setPhone(dto.getPhone());
-
         service.update(playground);
     }
 
