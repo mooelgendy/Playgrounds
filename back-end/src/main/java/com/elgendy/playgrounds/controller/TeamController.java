@@ -38,11 +38,12 @@ public class TeamController implements Serializable {
             teamDTOs = new ArrayList<>();
             it = teams.iterator();
             while(it.hasNext()){
+                Team team = it.next();
                 TeamDTO dto = new TeamDTO();
-                dto.setId(it.next().getId());
-                dto.setName(it.next().getName());
-                dto.setAddress(it.next().getAddress());
-                dto.setBio(it.next().getBio());
+                dto.setId(team.getId());
+                dto.setName(team.getName());
+                dto.setAddress(team.getAddress());
+                dto.setBio(team.getBio());
                 teamDTOs.add(dto);
             }
             return teamDTOs;

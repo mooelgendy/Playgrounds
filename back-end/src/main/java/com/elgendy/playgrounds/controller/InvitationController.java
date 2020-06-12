@@ -39,11 +39,12 @@ public class InvitationController {
             invitationDTOs = new ArrayList<>();
             it = invitations.iterator();
             while(it.hasNext()){
+                Invitation invite = it.next();
                 InvitationDTO dto = new InvitationDTO();
-                dto.setId(it.next().getId());
-                dto.setName(it.next().getName());
-                dto.setDate(it.next().getDate());
-                dto.setExpiryDate(it.next().getExpiryDate());
+                dto.setId(invite.getId());
+                dto.setName(invite.getName());
+                dto.setDate(invite.getDate());
+                dto.setExpiryDate(invite.getExpiryDate());
                 invitationDTOs.add(dto);
             }
             return invitationDTOs;

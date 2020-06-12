@@ -30,23 +30,24 @@ public class PlaygroundController implements Serializable {
 
     @GetMapping("/")
     public List<PlaygroundDTO> getAll(){
-        List<Playground> playground = null;
+        List<Playground> playgrounds = null;
         List<PlaygroundDTO> playgroundDTOs = null;
         Iterator<Playground> it = null;
         try{
-            playground = service.getAll();
+            playgrounds = service.getAll();
             playgroundDTOs = new ArrayList<>();
-            it = playground.iterator();
+            it = playgrounds.iterator();
             while(it.hasNext()){
+                Playground playground = it.next();
                 PlaygroundDTO dto = new PlaygroundDTO();
-                dto.setId(it.next().getId());
-                dto.setAddress(it.next().getAddress());
-                dto.setArea(it.next().getArea());
-                dto.setAvailableTime(it.next().getAvailableTime());
-                dto.setDescription(it.next().getDescription());
-                dto.setName(it.next().getName());
-                dto.setPhone(it.next().getPhone());
-                dto.setPricePerHour(it.next().getPricePerHour());
+                dto.setId(playground.getId());
+                dto.setAddress(playground.getAddress());
+                dto.setArea(playground.getArea());
+                dto.setAvailableTime(playground.getAvailableTime());
+                dto.setDescription(playground.getDescription());
+                dto.setName(playground.getName());
+                dto.setPhone(playground.getPhone());
+                dto.setPricePerHour(playground.getPricePerHour());
                 playgroundDTOs.add(dto);
             }
             return playgroundDTOs;

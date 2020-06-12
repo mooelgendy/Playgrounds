@@ -38,12 +38,13 @@ public class ReservationController implements Serializable {
             reservationDTOs = new ArrayList<>();
             it = reservations.iterator();
             while(it.hasNext()){
+                Reservation reservation = it.next();
                 ReservationDTO dto = new ReservationDTO();
-                dto.setId(it.next().getId());
-                dto.setName(it.next().getName());
-                dto.setHoursNumber(it.next().getHoursNumber());
-                dto.setPlayersNeeded(it.next().getPlayersNeeded());
-                dto.setReservedTime(it.next().getReservedTime());
+                dto.setId(reservation.getId());
+                dto.setName(reservation.getName());
+                dto.setHoursNumber(reservation.getHoursNumber());
+                dto.setPlayersNeeded(reservation.getPlayersNeeded());
+                dto.setReservedTime(reservation.getReservedTime());
                 reservationDTOs.add(dto);
             }
             return reservationDTOs;

@@ -38,14 +38,14 @@ public class UserController implements Serializable {
             userDTOs = new ArrayList<>();
             it = users.iterator();
             while(it.hasNext()){
+                User user = it.next();
                 UserDTO dto = new UserDTO();
-                dto.setId(it.next().getId());
-                dto.setName(it.next().getName());
-                dto.setAddress(it.next().getAddress());
-                String p = it.next().getPosition();
-                dto.setPosition(p);
-                dto.setPhone(it.next().getPhone());
-                dto.setBio(it.next().getBio());
+                dto.setId(user.getId());
+                dto.setName(user.getName());
+                dto.setAddress(user.getAddress());
+                dto.setPosition(user.getPosition());
+                dto.setPhone(user.getPhone());
+                dto.setBio(user.getBio());
                 userDTOs.add(dto);
             }
             return userDTOs;

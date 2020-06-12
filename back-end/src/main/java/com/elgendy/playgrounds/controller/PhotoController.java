@@ -39,10 +39,11 @@ public class PhotoController implements Serializable {
             photoDTOs = new ArrayList<>();
             it = photos.iterator();
             while(it.hasNext()){
+                Photo photo = it.next();
                 PhotoDTO dto = new PhotoDTO();
-                dto.setId(it.next().getId());
-                dto.setName(it.next().getName());
-                dto.setLink(it.next().getLink());
+                dto.setId(photo.getId());
+                dto.setName(photo.getName());
+                dto.setLink(photo.getLink());
                 photoDTOs.add(dto);
             }
             return photoDTOs;

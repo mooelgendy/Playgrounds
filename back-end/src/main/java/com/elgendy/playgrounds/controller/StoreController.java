@@ -37,12 +37,13 @@ public class StoreController {
             itemsDTO = new ArrayList<>();
             it = items.iterator();
             while(it.hasNext()) {
+                Store item = it.next();
                 StoreDTO dto = new StoreDTO();
-                dto.setId(it.next().getId());
-                dto.setName(it.next().getName());
-                dto.setDescription(it.next().getDescription());
-                dto.setSerialNumber(it.next().getSerialNumber());
-                dto.setPrice(it.next().getPrice());
+                dto.setId(item.getId());
+                dto.setName(item.getName());
+                dto.setDescription(item.getDescription());
+                dto.setSerialNumber(item.getSerialNumber());
+                dto.setPrice(item.getPrice());
                 itemsDTO.add(dto);
             }
             return itemsDTO;

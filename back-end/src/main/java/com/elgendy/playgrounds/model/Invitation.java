@@ -26,7 +26,7 @@ public class Invitation {
     
     @NotNull
     @Column(name = "EXPIRY_DATE")
-    private String expiryDate;
+    private Date expiryDate;
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "RESERVATION_ID", referencedColumnName = "ID")
@@ -40,7 +40,7 @@ public class Invitation {
 		super();
 	}
 
-	public Invitation(@NotNull String name, @NotNull Date date, @NotNull String expiryDate, Reservation reservation, User user) {
+	public Invitation(@NotNull String name, @NotNull Date date, @NotNull Date expiryDate, Reservation reservation, User user) {
 		super();
 		this.name = name;
 		this.date = date;
@@ -73,11 +73,11 @@ public class Invitation {
 		this.date = date;
 	}
 
-	public String getExpiryDate() {
+	public Date getExpiryDate() {
 		return expiryDate;
 	}
 
-	public void setExpiryDate(String expiryDate) {
+	public void setExpiryDate(Date expiryDate) {
 		this.expiryDate = expiryDate;
 	}
 
