@@ -5,6 +5,8 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -16,6 +18,7 @@ public class InvitationRepositoryImpl implements InvitationRepository{
 	
 	@PersistenceContext
     private EntityManager em;
+    private static Logger LOGGER = LoggerFactory.getLogger(InvitationRepositoryImpl.class);
 
     @Autowired
     public InvitationRepositoryImpl(EntityManager em) {
@@ -27,8 +30,8 @@ public class InvitationRepositoryImpl implements InvitationRepository{
 		List<Invitation> invitations = null;
         try{
         	invitations = em.createQuery("From Invitation", Invitation.class).getResultList();
-        } catch(Exception ex){
-            System.out.println(ex.getMessage());
+        } catch(Exception e){
+            LOGGER.error(e.getMessage(), e);
         }
         return invitations;	
 	}
@@ -38,8 +41,8 @@ public class InvitationRepositoryImpl implements InvitationRepository{
 		Invitation invitationById = null;
         try{
         	invitationById = em.find(Invitation.class, id);
-        } catch(Exception ex){
-            System.out.println(ex.getMessage());
+        } catch(Exception e){
+            LOGGER.error(e.getMessage(), e);
         }
         return invitationById;
 	}
@@ -48,20 +51,18 @@ public class InvitationRepositoryImpl implements InvitationRepository{
 	public void save(Invitation invitation) {
 		try{
             em.persist(invitation);
-        } catch(Exception ex){
-            System.out.println(ex.getMessage());
+        } catch(Exception e){
+            LOGGER.error(e.getMessage(), e);
         }
-		
 	}
 
 	@Override
 	public void update(Invitation invitation) {
 		try{
             em.merge(invitation);
-        } catch(Exception ex){
-            System.out.println(ex.getMessage());
+        } catch(Exception e){
+            LOGGER.error(e.getMessage(), e);
         }
-		
 	}
 
 	@Override
@@ -72,10 +73,9 @@ public class InvitationRepositoryImpl implements InvitationRepository{
             }else {
                 throw new RuntimeException("photo You Want To Delete is Not Found!");
             }
-        } catch (Exception ex){
-            System.out.println(ex.getMessage());
+        } catch (Exception e){
+            LOGGER.error(e.getMessage(), e);
         }
-		
 	}
 
 }

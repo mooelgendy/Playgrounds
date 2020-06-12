@@ -4,14 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -28,19 +21,19 @@ public class Invitation {
     private String name;
     
     @NotNull
-    @Column(name = "DATE")
+    @Column(name = "INVITATION_DATE")
     private Date date;
     
     @NotNull
     @Column(name = "EXPIRY_DATE")
     private String expiryDate;
     
-    @ManyToOne
-    @JoinColumn(name="ID", nullable=false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "RESERVATION_ID", referencedColumnName = "ID")
     private Reservation reservation;
     
-    @ManyToOne
-    @JoinColumn(name="ID", nullable=false)
+    @ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "USER_ID", referencedColumnName = "ID")
     private User user;
 
 	public Invitation() {

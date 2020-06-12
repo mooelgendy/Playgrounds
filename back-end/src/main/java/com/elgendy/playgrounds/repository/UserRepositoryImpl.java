@@ -1,6 +1,8 @@
 package com.elgendy.playgrounds.repository;
 
 import com.elgendy.playgrounds.model.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -13,6 +15,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     @PersistenceContext
     private EntityManager em;
+    private static Logger LOGGER = LoggerFactory.getLogger(UserRepositoryImpl.class);
 
     @Autowired
     public UserRepositoryImpl(EntityManager entityManager) {
@@ -24,8 +27,8 @@ public class UserRepositoryImpl implements UserRepository {
         List<User> users = null;
         try{
             users = em.createQuery("From User", User.class).getResultList();
-        } catch(Exception ex){
-            System.out.println(ex.getMessage());
+        } catch(Exception e){
+            LOGGER.error(e.getMessage(), e);
         }
         return users;
     }
@@ -35,8 +38,8 @@ public class UserRepositoryImpl implements UserRepository {
         User userById = null;
         try{
             userById = em.find(User.class, id);
-        } catch (Exception ex){
-            System.out.println(ex.getMessage());
+        } catch (Exception e){
+            LOGGER.error(e.getMessage(), e);
         }
         return userById;
     }
@@ -45,8 +48,8 @@ public class UserRepositoryImpl implements UserRepository {
     public void save(User user) {
         try{
             em.persist(user);
-        } catch(Exception ex){
-            System.out.println(ex.getMessage());
+        } catch(Exception e){
+            LOGGER.error(e.getMessage(), e);
         }
     }
 
@@ -54,8 +57,8 @@ public class UserRepositoryImpl implements UserRepository {
     public void update(User user) {
         try{
             em.merge(user);
-        } catch(Exception ex){
-            System.out.println(ex.getMessage());
+        } catch(Exception e){
+            LOGGER.error(e.getMessage(), e);
         }
     }
 
@@ -67,8 +70,8 @@ public class UserRepositoryImpl implements UserRepository {
             }else {
                 throw new RuntimeException("User You Want To Delete is Not Found!");
             }
-        } catch (Exception ex){
-            System.out.println(ex.getMessage());
+        } catch (Exception e){
+            LOGGER.error(e.getMessage(), e);
         }
     }
 }

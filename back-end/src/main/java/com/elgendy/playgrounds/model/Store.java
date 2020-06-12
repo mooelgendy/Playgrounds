@@ -24,26 +24,26 @@ public class Store implements Serializable {
     @Column(name = "PRICE")
     private String price;
 
-    @Column(name = "QUANTITY")
-    private Integer quantity;
+    @Column(name = "SERIAL_NUMBER")
+    private String serialNumber;
     
     @OneToMany(mappedBy="store")
     private Set<Photo> photos;
     
-    @ManyToOne
-    @JoinColumn(name="ID", nullable=false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "USER_ID", referencedColumnName = "ID")
     private User user;
 
     public Store() {
     }
 
-    public Store(@NotNull String name, String description, String price, Integer quantity, User user, Set<Photo> photos) {
+    public Store(@NotNull String name, String description, String price, String serialNumber, Set<Photo> photos, User user) {
         this.name = name;
         this.description = description;
         this.price = price;
-        this.quantity = quantity;
-        this.user = user;
+        this.serialNumber = serialNumber;
         this.photos = photos;
+        this.user = user;
     }
 
     public void setId(Integer id) {
@@ -78,12 +78,12 @@ public class Store implements Serializable {
         this.price = price;
     }
 
-    public Integer getQuantity() {
-        return quantity;
+    public String getSerialNumber() {
+        return serialNumber;
     }
 
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
+    public void setSerialNumber(String serialNumber) {
+        this.serialNumber = serialNumber;
     }
 
     public User getUser() {

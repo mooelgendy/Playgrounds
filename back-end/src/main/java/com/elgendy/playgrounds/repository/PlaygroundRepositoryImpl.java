@@ -1,6 +1,8 @@
 package com.elgendy.playgrounds.repository;
 
 import com.elgendy.playgrounds.model.Playground;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -13,6 +15,7 @@ public class PlaygroundRepositoryImpl implements PlaygroundRepository {
 
     @PersistenceContext
     private EntityManager em;
+    private static Logger LOGGER = LoggerFactory.getLogger(PlaygroundRepositoryImpl.class);
 
     @Autowired
     public PlaygroundRepositoryImpl(EntityManager em) {
@@ -24,8 +27,8 @@ public class PlaygroundRepositoryImpl implements PlaygroundRepository {
         List<Playground> playgrounds = null;
         try{
             playgrounds = em.createQuery("From Playground", Playground.class).getResultList();
-        } catch (Exception ex){
-            System.out.println(ex.getMessage());
+        } catch (Exception e){
+            LOGGER.error(e.getMessage(), e);
         }
         return playgrounds;
     }
@@ -35,8 +38,8 @@ public class PlaygroundRepositoryImpl implements PlaygroundRepository {
         Playground playgroundById = null;
         try{
             playgroundById = em.find(Playground.class, id);
-        } catch(Exception ex){
-            System.out.println(ex.getMessage());
+        } catch(Exception e){
+            LOGGER.error(e.getMessage(), e);
         }
         return playgroundById;
     }
@@ -45,8 +48,8 @@ public class PlaygroundRepositoryImpl implements PlaygroundRepository {
     public void save(Playground playground) {
         try{
             em.persist(playground);
-        } catch(Exception ex){
-            System.out.println(ex.getMessage());
+        } catch(Exception e){
+            LOGGER.error(e.getMessage(), e);
         }
     }
 
@@ -54,8 +57,8 @@ public class PlaygroundRepositoryImpl implements PlaygroundRepository {
     public void update(Playground playground) {
         try{
             em.merge(playground);
-        } catch(Exception ex){
-            System.out.println(ex.getMessage());
+        } catch(Exception e){
+            LOGGER.error(e.getMessage(), e);
         }
     }
 
@@ -67,8 +70,8 @@ public class PlaygroundRepositoryImpl implements PlaygroundRepository {
             }else {
                 throw new RuntimeException("Playground You Want To Delete is Not Found!");
             }
-        } catch (Exception ex){
-            System.out.println(ex.getMessage());
+        } catch (Exception e){
+            LOGGER.error(e.getMessage(), e);
         }
     }
 }

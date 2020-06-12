@@ -4,6 +4,8 @@ import com.elgendy.playgrounds.model.DTO.PhotoDTO;
 import com.elgendy.playgrounds.model.Photo;
 import com.elgendy.playgrounds.service.PhotoService;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -16,10 +18,11 @@ import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @RestController
-@RequestMapping("/api/photos")
+@RequestMapping("/api/photo")
 public class PhotoController implements Serializable {
 
     private PhotoService service;
+    private static Logger LOGGER = LoggerFactory.getLogger(PhotoController.class);
 
     @Autowired
     public PhotoController(PhotoService service) {
@@ -28,52 +31,84 @@ public class PhotoController implements Serializable {
 
     @GetMapping("/")
     public List<PhotoDTO> getAll(){
-        List<Photo> photos = service.getAll();
-        List<PhotoDTO> photoDTOs = new ArrayList<>();
-        Iterator<Photo> it = photos.iterator();
-        while(it.hasNext()){
-            PhotoDTO dto = new PhotoDTO();
-            dto.setId(it.next().getId());
-            dto.setName(it.next().getName());
-            dto.setLink(it.next().getLink());
-            photoDTOs.add(dto);
+        List<Photo> photos = null;
+        List<PhotoDTO> photoDTOs = null;
+        Iterator<Photo> it = null;
+        try{
+            photos = service.getAll();
+            photoDTOs = new ArrayList<>();
+            it = photos.iterator();
+            while(it.hasNext()){
+                PhotoDTO dto = new PhotoDTO();
+                dto.setId(it.next().getId());
+                dto.setName(it.next().getName());
+                dto.setLink(it.next().getLink());
+                photoDTOs.add(dto);
+            }
+            return photoDTOs;
+        } catch (Exception e){
+            LOGGER.error(e.getMessage(), e);
+            throw new RuntimeException("Internal Server Error");
         }
-        return photoDTOs;
     }
 
     @GetMapping("/{id}")
     public PhotoDTO findOne(@PathVariable("id") Integer id){
-        Photo photo = service.getOne(id);
-        PhotoDTO dto = new PhotoDTO();
-        dto.setId(photo.getId());
-        dto.setLink(photo.getLink());
-        dto.setName(photo.getName());
-        return dto;
+        Photo photo = null;
+        PhotoDTO dto = null;
+        try{
+            photo = service.getOne(id);
+            dto = new PhotoDTO();
+            dto.setId(photo.getId());
+            dto.setLink(photo.getLink());
+            dto.setName(photo.getName());
+            return dto;
+        } catch (Exception e){
+            LOGGER.error(e.getMessage(), e);
+            throw new RuntimeException("Internal Server Error");
+        }
     }
 
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
     public void create(@Valid @RequestBody PhotoDTO dto) {
-        Photo photo = new Photo();
-        photo.setName(dto.getName());
-        photo.setLink(dto.getLink());
-        service.add(photo);
+        Photo photo = null;
+        try{
+            photo = new Photo();
+            photo.setName(dto.getName());
+            photo.setLink(dto.getLink());
+            service.add(photo);
+        } catch (Exception e){
+            LOGGER.error(e.getMessage(), e);
+            throw new RuntimeException("Internal Server Error");
+        }
     }
 
     @PutMapping("/")
     @ResponseStatus(HttpStatus.OK)
     public void update(@Valid @RequestBody PhotoDTO dto) {
-        Photo photo = new Photo();
-        photo.setId(dto.getId());
-        photo.setName(dto.getName());
-        photo.setLink(dto.getLink());
-        service.update(photo);
+        Photo photo = null;
+        try{
+            photo = new Photo();
+            photo.setId(dto.getId());
+            photo.setName(dto.getName());
+            photo.setLink(dto.getLink());
+            service.update(photo);
+        } catch (Exception e){
+            LOGGER.error(e.getMessage(), e);
+            throw new RuntimeException("Internal Server Error");
+        }
     }
 
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable("id") Integer id) {
-        service.delete(id);
+        try{
+            service.delete(id);
+        } catch (Exception e){
+            LOGGER.error(e.getMessage(), e);
+            throw new RuntimeException("Internal Server Error");
+        }
     }
 }

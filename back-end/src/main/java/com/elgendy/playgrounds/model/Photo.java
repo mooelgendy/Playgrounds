@@ -20,20 +20,20 @@ public class Photo implements Serializable {
     @Column(name = "Link")
     private String link;
 
-    @ManyToOne
-    @JoinColumn(name="ID", nullable=false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "USER_ID", referencedColumnName = "ID")
     private User user;
-    
-    @ManyToOne
-    @JoinColumn(name="ID", nullable=false)
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "TEAM_ID", referencedColumnName = "ID")
     private Team team;
     
-    @ManyToOne
-    @JoinColumn(name="ID", nullable=false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "STORE_ID", referencedColumnName = "ID")
     private Store store;
     
-    @ManyToOne
-    @JoinColumn(name="ID", nullable=false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "PLAYGROUND_ID", referencedColumnName = "ID")
     private Playground playground;
 
     public Photo() {

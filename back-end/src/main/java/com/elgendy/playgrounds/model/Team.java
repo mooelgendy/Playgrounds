@@ -26,12 +26,6 @@ public class Team implements Serializable {
     @Column(name = "BIO")
     private String bio;
 
-    @Column(name = "PROFILE_PHOTO")
-    private String profilePhoto;
-
-    @Column(name = "COVER_PHOTO")
-    private String coverPhoto;
-
     @OneToMany(mappedBy="team")
     private Set<Photo> photos;
     
@@ -41,12 +35,10 @@ public class Team implements Serializable {
     public Team() {
     }
 
-    public Team(@NotNull String name, @NotNull String address, String bio, String profilePhoto, String coverPhoto, Set<User> users, Set<Photo> photos) {
+    public Team(@NotNull String name, @NotNull String address, String bio, Set<User> users, Set<Photo> photos) {
         this.name = name;
         this.address = address;
         this.bio = bio;
-        this.profilePhoto = profilePhoto;
-        this.coverPhoto = coverPhoto;
         this.users = users;
         this.photos = photos;
     }
@@ -81,22 +73,6 @@ public class Team implements Serializable {
 
     public void setBio(String bio) {
         this.bio = bio;
-    }
-
-    public String getProfilePhoto() {
-        return profilePhoto;
-    }
-
-    public void setProfilePhoto(String profilePhoto) {
-        this.profilePhoto = profilePhoto;
-    }
-
-    public String getCoverPhoto() {
-        return coverPhoto;
-    }
-
-    public void setCoverPhoto(String coverPhoto) {
-        this.coverPhoto = coverPhoto;
     }
 
     public Set<User> getUsers() {

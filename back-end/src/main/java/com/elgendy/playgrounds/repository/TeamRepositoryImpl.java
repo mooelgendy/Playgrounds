@@ -1,6 +1,8 @@
 package com.elgendy.playgrounds.repository;
 
 import com.elgendy.playgrounds.model.Team;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -12,7 +14,8 @@ import java.util.List;
 public class TeamRepositoryImpl implements TeamRepository {
 
     @PersistenceContext
-    EntityManager em;
+    private EntityManager em;
+    private static Logger LOGGER = LoggerFactory.getLogger(TeamRepositoryImpl.class);
 
     @Autowired
     public TeamRepositoryImpl(EntityManager em) {
@@ -24,8 +27,8 @@ public class TeamRepositoryImpl implements TeamRepository {
         List<Team> teams = null;
         try{
             teams = em.createQuery("From Team", Team.class).getResultList();
-        } catch (Exception ex){
-            System.out.println(ex.getMessage());
+        } catch (Exception e){
+            LOGGER.error(e.getMessage(), e);
         }
         return teams;
     }
@@ -35,8 +38,8 @@ public class TeamRepositoryImpl implements TeamRepository {
         Team teamById = null;
         try{
             teamById = em.find(Team.class, id);
-        } catch (Exception ex){
-            System.out.println(ex.getMessage());
+        } catch (Exception e){
+            LOGGER.error(e.getMessage(), e);
         }
         return teamById;
     }
@@ -45,8 +48,8 @@ public class TeamRepositoryImpl implements TeamRepository {
     public void save(Team team) {
         try{
             em.persist(team);
-        } catch(Exception ex){
-            System.out.println(ex.getMessage());
+        } catch(Exception e){
+            LOGGER.error(e.getMessage(), e);
         }
     }
 
@@ -54,8 +57,8 @@ public class TeamRepositoryImpl implements TeamRepository {
     public void update(Team team) {
         try{
             em.merge(team);
-        } catch(Exception ex){
-            System.out.println(ex.getMessage());
+        } catch(Exception e){
+            LOGGER.error(e.getMessage(), e);
         }
     }
 
@@ -67,8 +70,8 @@ public class TeamRepositoryImpl implements TeamRepository {
             }else {
                 throw new RuntimeException("Team You Want To Delete is Not Found!");
             }
-        } catch (Exception ex){
-            System.out.println(ex.getMessage());
+        } catch (Exception e){
+            LOGGER.error(e.getMessage(), e);
         }
     }
 }

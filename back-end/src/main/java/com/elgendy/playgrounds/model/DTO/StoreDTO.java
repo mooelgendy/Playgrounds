@@ -8,19 +8,19 @@ public class StoreDTO {
 
     private String description;
 
-    private String price;
+    private String serialNumber;
 
-    private Integer quantity;
+    private String price;
 
     public StoreDTO() {
     }
 
-    public StoreDTO(Integer id, String name, String description, String price, Integer quantity) {
+    public StoreDTO(Integer id, String name, String description, String price, String serialNumber) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
-        this.quantity = quantity;
+        this.serialNumber = serialNumber;
     }
 
     public Integer getId() {
@@ -55,11 +55,11 @@ public class StoreDTO {
         this.price = price;
     }
 
-    public Integer getQuantity() {
-        return quantity;
+    public String getSerialNumber() {
+        return serialNumber;
     }
 
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
+    public void setSerialNumber(String serialNumber) {
+        this.serialNumber = serialNumber;
     }
 }

@@ -1,6 +1,8 @@
 package com.elgendy.playgrounds.repository;
 
 import com.elgendy.playgrounds.model.Photo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -13,6 +15,7 @@ public class PhotoRepositoryImpl implements PhotoRepository {
 
     @PersistenceContext
     private EntityManager em;
+    private static Logger LOGGER = LoggerFactory.getLogger(PhotoRepositoryImpl.class);
 
     @Autowired
     public PhotoRepositoryImpl(EntityManager em) {
@@ -24,8 +27,8 @@ public class PhotoRepositoryImpl implements PhotoRepository {
         List<Photo> photos = null;
         try{
             photos = em.createQuery("From Photo", Photo.class).getResultList();
-        } catch(Exception ex){
-            System.out.println(ex.getMessage());
+        } catch(Exception e){
+            LOGGER.error(e.getMessage(), e);
         }
         return photos;
     }
@@ -35,8 +38,8 @@ public class PhotoRepositoryImpl implements PhotoRepository {
         Photo photoById = null;
         try{
             photoById = em.find(Photo.class, id);
-        } catch(Exception ex){
-            System.out.println(ex.getMessage());
+        } catch(Exception e){
+            LOGGER.error(e.getMessage(), e);
         }
         return photoById;
     }
@@ -45,8 +48,8 @@ public class PhotoRepositoryImpl implements PhotoRepository {
     public void save(Photo photo) {
         try{
             em.persist(photo);
-        } catch(Exception ex){
-            System.out.println(ex.getMessage());
+        } catch(Exception e){
+            LOGGER.error(e.getMessage(), e);
         }
     }
 
@@ -54,8 +57,8 @@ public class PhotoRepositoryImpl implements PhotoRepository {
     public void update(Photo photo) {
         try{
             em.merge(photo);
-        } catch(Exception ex){
-            System.out.println(ex.getMessage());
+        } catch(Exception e){
+            LOGGER.error(e.getMessage(), e);
         }
     }
 
@@ -67,8 +70,8 @@ public class PhotoRepositoryImpl implements PhotoRepository {
             }else {
                 throw new RuntimeException("photo You Want To Delete is Not Found!");
             }
-        } catch (Exception ex){
-            System.out.println(ex.getMessage());
+        } catch (Exception e){
+            LOGGER.error(e.getMessage(), e);
         }
     }
 }

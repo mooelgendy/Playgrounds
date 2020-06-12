@@ -1,6 +1,8 @@
 package com.elgendy.playgrounds.repository;
 
 import com.elgendy.playgrounds.model.Reservation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -12,7 +14,8 @@ import java.util.List;
 public class ReservationRepositoryImpl implements ReservationRepository {
 
     @PersistenceContext
-    EntityManager em;
+    private EntityManager em;
+    private static Logger LOGGER = LoggerFactory.getLogger(ReservationRepositoryImpl.class);
 
     @Autowired
     public ReservationRepositoryImpl(EntityManager em) {
@@ -24,8 +27,8 @@ public class ReservationRepositoryImpl implements ReservationRepository {
         List<Reservation> reservations = null;
         try{
             reservations = em.createQuery("From Reservation", Reservation.class).getResultList();
-        } catch(Exception ex){
-            System.out.println(ex.getMessage());
+        } catch(Exception e){
+            LOGGER.error(e.getMessage(), e);
         }
         return reservations;
     }
@@ -35,8 +38,8 @@ public class ReservationRepositoryImpl implements ReservationRepository {
         Reservation reservationById = null;
         try{
             reservationById = em.find(Reservation.class, id);
-        } catch(Exception ex){
-            System.out.println(ex.getMessage());
+        } catch(Exception e){
+            LOGGER.error(e.getMessage(), e);
         }
         return reservationById;
     }
@@ -45,8 +48,8 @@ public class ReservationRepositoryImpl implements ReservationRepository {
     public void save(Reservation reservation) {
         try{
             em.persist(reservation);
-        } catch(Exception ex){
-            System.out.println(ex.getMessage());
+        } catch(Exception e){
+            LOGGER.error(e.getMessage(), e);
         }
     }
 
@@ -54,8 +57,8 @@ public class ReservationRepositoryImpl implements ReservationRepository {
     public void update(Reservation reservation) {
         try{
             em.merge(reservation);
-        } catch(Exception ex){
-            System.out.println(ex.getMessage());
+        } catch(Exception e){
+            LOGGER.error(e.getMessage(), e);
         }
     }
 
@@ -67,8 +70,8 @@ public class ReservationRepositoryImpl implements ReservationRepository {
             }else {
                 throw new RuntimeException("reservation You Want To Delete is Not Found!");
             }
-        } catch (Exception ex){
-            System.out.println(ex.getMessage());
+        } catch (Exception e){
+            LOGGER.error(e.getMessage(), e);
         }
     }
 }

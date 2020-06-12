@@ -6,25 +6,23 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.elgendy.playgrounds.model.Invitation;
 import com.elgendy.playgrounds.model.DTO.InvitationDTO;
 import com.elgendy.playgrounds.service.InvitationService;
 
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @RestController
+@RequestMapping("/api/invitation")
 public class InvitationController {
 
 	private InvitationService service;
+    private static Logger LOGGER = LoggerFactory.getLogger(InvitationController.class);
 
     @Autowired
     public InvitationController(InvitationService service) {
@@ -33,56 +31,89 @@ public class InvitationController {
     
     @GetMapping("/")
     public List<InvitationDTO> getAll(){
-        List<Invitation> invitations = service.getAll();
-        List<InvitationDTO> invitationDTOs = new ArrayList<>();
-        Iterator<Invitation> it = invitations.iterator();
-        while(it.hasNext()){
-        	InvitationDTO dto = new InvitationDTO();
-            dto.setId(it.next().getId());
-            dto.setName(it.next().getName());
-            dto.setDate(it.next().getDate());
-            dto.setExpiryDate(it.next().getExpiryDate());
-            invitationDTOs.add(dto);
+        List<Invitation> invitations = null;
+        List<InvitationDTO> invitationDTOs = null;
+        Iterator<Invitation> it = null;
+        try{
+            invitations = service.getAll();
+            invitationDTOs = new ArrayList<>();
+            it = invitations.iterator();
+            while(it.hasNext()){
+                InvitationDTO dto = new InvitationDTO();
+                dto.setId(it.next().getId());
+                dto.setName(it.next().getName());
+                dto.setDate(it.next().getDate());
+                dto.setExpiryDate(it.next().getExpiryDate());
+                invitationDTOs.add(dto);
+            }
+            return invitationDTOs;
+        } catch (Exception e){
+            LOGGER.error(e.getMessage(), e);
+            throw new RuntimeException("Internal Server Error");
         }
-        return invitationDTOs;
     }
 
     @GetMapping("/{id}")
     public InvitationDTO findOne(@PathVariable("id") Integer id){
-    	Invitation invitation = service.getOne(id);
-    	InvitationDTO dto = new InvitationDTO();
-        dto.setId(invitation.getId());
-        dto.setName(invitation.getName());
-        dto.setDate(invitation.getDate());
-        dto.setExpiryDate(invitation.getExpiryDate());
-        return dto;
+        Invitation invitation = null;
+        InvitationDTO dto = null;
+        try{
+            invitation = service.getOne(id);
+            dto = new InvitationDTO();
+            dto.setId(invitation.getId());
+            dto.setName(invitation.getName());
+            dto.setDate(invitation.getDate());
+            dto.setExpiryDate(invitation.getExpiryDate());
+            return dto;
+        } catch (Exception e){
+            LOGGER.error(e.getMessage(), e);
+            throw new RuntimeException("Internal Server Error");
+        }
     }
 
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
     public void create(@Valid @RequestBody InvitationDTO dto) {
-    	Invitation invitation = new Invitation();
-    	invitation.setName(dto.getName());
-    	invitation.setDate(dto.getDate());
-    	invitation.setExpiryDate(dto.getExpiryDate());
-        service.add(invitation);
+        Invitation invitation = null;
+        try{
+            invitation = new Invitation();
+            invitation.setName(dto.getName());
+            invitation.setDate(dto.getDate());
+            invitation.setExpiryDate(dto.getExpiryDate());
+            service.add(invitation);
+        } catch (Exception e){
+            LOGGER.error(e.getMessage(), e);
+            throw new RuntimeException("Internal Server Error");
+        }
     }
 
     @PutMapping("/")
     @ResponseStatus(HttpStatus.OK)
     public void update(@Valid @RequestBody InvitationDTO dto) {
-    	Invitation invitation = new Invitation();
-    	invitation.setId(dto.getId());
-    	invitation.setName(dto.getName());
-    	invitation.setDate(dto.getDate());
-    	invitation.setExpiryDate(dto.getExpiryDate());
-        service.update(invitation);
+        Invitation invitation = null;
+        try{
+            invitation = new Invitation();
+            invitation.setId(dto.getId());
+            invitation.setName(dto.getName());
+            invitation.setDate(dto.getDate());
+            invitation.setExpiryDate(dto.getExpiryDate());
+            service.update(invitation);
+        } catch (Exception e){
+            LOGGER.error(e.getMessage(), e);
+            throw new RuntimeException("Internal Server Error");
+        }
+
     }
 
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable("id") Integer id) {
-        service.delete(id);
+        try{
+            service.delete(id);
+        } catch (Exception e){
+            LOGGER.error(e.getMessage(), e);
+            throw new RuntimeException("Internal Server Error");
+        }
     }
 }

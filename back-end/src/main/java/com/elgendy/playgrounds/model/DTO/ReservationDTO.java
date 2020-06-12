@@ -1,10 +1,14 @@
 package com.elgendy.playgrounds.model.DTO;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 public class ReservationDTO {
 
     private Integer id;
+
+    private String name;
 
     private Date ReservedTime;
 
@@ -14,15 +18,22 @@ public class ReservationDTO {
 
     private PlaygroundDTO playground;
 
+    private UserDTO user;
+
+    private Set<InvitationDTO> invitations = new HashSet<>();
+
     public ReservationDTO() {
     }
 
-    public ReservationDTO(Integer id, Date reservedTime, String playersNeeded, String hoursNumber, PlaygroundDTO playground) {
+    public ReservationDTO(Integer id, String name, Date reservedTime, String playersNeeded, String hoursNumber, PlaygroundDTO playground, UserDTO user, Set<InvitationDTO> invitations) {
         this.id = id;
+        this.name = name;
         ReservedTime = reservedTime;
         PlayersNeeded = playersNeeded;
         HoursNumber = hoursNumber;
         this.playground = playground;
+        this.user = user;
+        this.invitations = invitations;
     }
 
     public Integer getId() {
@@ -31,6 +42,14 @@ public class ReservationDTO {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Date getReservedTime() {
@@ -63,5 +82,21 @@ public class ReservationDTO {
 
     public void setPlayground(PlaygroundDTO playground) {
         this.playground = playground;
+    }
+
+    public Set<InvitationDTO> getInvitations() {
+        return invitations;
+    }
+
+    public void setInvitations(Set<InvitationDTO> invitations) {
+        this.invitations = invitations;
+    }
+
+    public UserDTO getUser() {
+        return user;
+    }
+
+    public void setUser(UserDTO user) {
+        this.user = user;
     }
 }

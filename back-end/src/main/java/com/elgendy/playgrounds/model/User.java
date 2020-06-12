@@ -33,15 +33,6 @@ public class User implements Serializable {
     @Column(name = "BIO")
     private String bio;
 
-    @Column(name = "CHOSEN_TIME")
-    private Date chosenTime;
-
-    @Column(name = "PROFILE_PHOTO")
-    private String profilePhoto;
-
-    @Column(name = "COVER_PHOTO")
-    private String coverPhoto;
-
     @ManyToMany(cascade	 = { CascadeType.ALL })
     @JoinTable(name = "USER_TEAM",
                joinColumns = { @JoinColumn(name = "USER_ID") },
@@ -50,13 +41,12 @@ public class User implements Serializable {
 
     @OneToMany(mappedBy="user")
     private Set<Photo> photos;
-    
-    @ManyToOne
-    @JoinColumn(name="ID", nullable=false)
-    private Reservation reservation;
 
     @OneToMany(mappedBy="user")
     private Set<Store> items;
+
+    @OneToMany(mappedBy="user")
+    private Set<Reservation> reservations;
     
     @OneToMany(mappedBy="user")
     private Set<Invitation> invitations;
@@ -64,19 +54,16 @@ public class User implements Serializable {
     public User() {
     }
 
-    public User(@NotNull String name, @NotNull String address, String position, String phone, String bio, Date chosenTime, String profilePhoto, String coverPhoto, Set<Team> teams, Set<Photo> photos, Set<Store> items, Reservation reservation, Set<Invitation> invitations) {
+    public User(@NotNull String name, @NotNull String address, String position, String phone, String bio, Set<Team> teams, Set<Photo> photos, Set<Store> items, Set<Reservation> reservations, Set<Invitation> invitations) {
         this.name = name;
         this.address = address;
         this.position = position;
         this.phone = phone;
         this.bio = bio;
-        this.chosenTime = chosenTime;
-        this.profilePhoto = profilePhoto;
-        this.coverPhoto = coverPhoto;
         this.teams = teams;
         this.photos = photos;
         this.items = items;
-        this.reservation = reservation;
+        this.reservations = reservations;
         this.invitations = invitations;
     }
 
@@ -128,30 +115,6 @@ public class User implements Serializable {
         this.bio = bio;
     }
 
-    public Date getChosenTime() {
-        return chosenTime;
-    }
-
-    public void setChosenTime(Date chosenTime) {
-        this.chosenTime = chosenTime;
-    }
-
-    public String getProfilePhoto() {
-        return profilePhoto;
-    }
-
-    public void setProfilePhoto(String profilePhoto) {
-        this.profilePhoto = profilePhoto;
-    }
-
-    public String getCoverPhoto() {
-        return coverPhoto;
-    }
-
-    public void setCoverPhoto(String coverPhoto) {
-        this.coverPhoto = coverPhoto;
-    }
-
     public Set<Team> getTeams() {
         return teams;
     }
@@ -176,14 +139,6 @@ public class User implements Serializable {
         this.items = items;
     }
 
-	public Reservation getReservation() {
-		return reservation;
-	}
-
-	public void setReservation(Reservation reservation) {
-		this.reservation = reservation;
-	}
-
 	public Set<Invitation> getInvitations() {
 		return invitations;
 	}
@@ -191,4 +146,12 @@ public class User implements Serializable {
 	public void setInvitations(Set<Invitation> invitations) {
 		this.invitations = invitations;
 	}
+
+    public Set<Reservation> getReservations() {
+        return reservations;
+    }
+
+    public void setReservations(Set<Reservation> reservations) {
+        this.reservations = reservations;
+    }
 }

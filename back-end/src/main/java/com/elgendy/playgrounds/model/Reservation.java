@@ -16,6 +16,10 @@ public class Reservation implements Serializable {
     private Integer id;
 
     @NotNull
+    @Column(name = "NAME")
+    private String name;
+
+    @NotNull
     @Column(name = "RESERVED_TIME")
     private Date ReservedTime;
 
@@ -27,25 +31,27 @@ public class Reservation implements Serializable {
     @Column(name = "HOURS_NUMBER")
     private String HoursNumber;
 
-    @OneToMany(mappedBy="reservation")
-    private Set<User> users;
-    
-    @ManyToOne
-    @JoinColumn(name = "ID", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "PLAYGROUND_ID", referencedColumnName = "ID")
     private Playground playground;
-    
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "USER_ID", referencedColumnName = "ID")
+    private User user;
+
     @OneToMany(mappedBy="reservation")
     private Set<Invitation> invitations;
 
     public Reservation() {
     }
 
-    public Reservation(@NotNull Date reservedTime, @NotNull String playersNeeded, @NotNull String hoursNumber, Set<User> users, Playground playground, Set<Invitation> invitations) {
-        this.ReservedTime = reservedTime;
-        this.PlayersNeeded = playersNeeded;
-        this.HoursNumber = hoursNumber;
-        this.users = users;
+    public Reservation(@NotNull String name, @NotNull Date reservedTime, @NotNull String playersNeeded, @NotNull String hoursNumber, Playground playground, User user, Set<Invitation> invitations) {
+        this.name = name;
+        ReservedTime = reservedTime;
+        PlayersNeeded = playersNeeded;
+        HoursNumber = hoursNumber;
         this.playground = playground;
+        this.user = user;
         this.invitations = invitations;
     }
 
@@ -55,6 +61,14 @@ public class Reservation implements Serializable {
 
     public Integer getId() {
         return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Date getReservedTime() {
@@ -81,14 +95,6 @@ public class Reservation implements Serializable {
         HoursNumber = hoursNumber;
     }
 
-    public Set<User> getUsers() {
-		return users;
-	}
-
-	public void setUsers(Set<User> users) {
-		this.users = users;
-	}
-
 	public Playground getPlayground() {
         return playground;
     }
@@ -104,4 +110,12 @@ public class Reservation implements Serializable {
 	public void setInvitations(Set<Invitation> invitations) {
 		this.invitations = invitations;
 	}
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

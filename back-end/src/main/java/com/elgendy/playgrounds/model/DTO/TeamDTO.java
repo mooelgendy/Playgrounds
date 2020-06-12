@@ -10,20 +10,14 @@ public class TeamDTO {
 
     private String bio;
 
-    private String profilePhoto;
-
-    private String coverPhoto;
-
     public TeamDTO() {
     }
 
-    public TeamDTO(Integer id, String name, String address, String bio, String profilePhoto, String coverPhoto) {
+    public TeamDTO(Integer id, String name, String address, String bio) {
         this.id = id;
         this.name = name;
         this.address = address;
         this.bio = bio;
-        this.profilePhoto = profilePhoto;
-        this.coverPhoto = coverPhoto;
     }
 
     public Integer getId() {
@@ -56,21 +50,5 @@ public class TeamDTO {
 
     public void setBio(String bio) {
         this.bio = bio;
-    }
-
-    public String getProfilePhoto() {
-        return profilePhoto;
-    }
-
-    public void setProfilePhoto(String profilePhoto) {
-        this.profilePhoto = profilePhoto;
-    }
-
-    public String getCoverPhoto() {
-        return coverPhoto;
-    }
-
-    public void setCoverPhoto(String coverPhoto) {
-        this.coverPhoto = coverPhoto;
     }
 }
