@@ -39,10 +39,13 @@ public class Photo implements Serializable {
     public Photo() {
     }
 
-    public Photo(String name, @NotNull String link, User user) {
+    public Photo(String name, @NotNull String link, User user, Team team, Store store, Playground playground) {
         this.name = name;
         this.link = link;
         this.user = user;
+        this.team = team;
+        this.store = store;
+        this.playground = playground;
     }
 
     public void setId(Integer id) {
@@ -75,5 +78,29 @@ public class Photo implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
+    }
+
+    public Store getStore() {
+        return store;
+    }
+
+    public void setStore(Store store) {
+        this.store = store;
+    }
+
+    public Playground getPlayground() {
+        return playground;
+    }
+
+    public void setPlayground(Playground playground) {
+        this.playground = playground;
     }
 }

@@ -41,11 +41,11 @@ public class PlaygroundController implements Serializable {
                 Playground playground = it.next();
                 PlaygroundDTO dto = new PlaygroundDTO();
                 dto.setId(playground.getId());
+                dto.setName(playground.getName());
                 dto.setAddress(playground.getAddress());
                 dto.setArea(playground.getArea());
                 dto.setAvailableTime(playground.getAvailableTime());
                 dto.setDescription(playground.getDescription());
-                dto.setName(playground.getName());
                 dto.setPhone(playground.getPhone());
                 dto.setPricePerHour(playground.getPricePerHour());
                 playgroundDTOs.add(dto);
