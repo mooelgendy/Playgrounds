@@ -11,9 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @RestController
@@ -32,13 +31,9 @@ public class UserController implements Serializable {
     public List<UserDTO> getAll(){
         List<User> users = null;
         List<UserDTO> userDTOs = null;
-        Iterator<User> it = null;
         try {
             users = service.getAll();
-            userDTOs = new ArrayList<>();
-            it = users.iterator();
-            while(it.hasNext()){
-                User user = it.next();
+            userDTOs = users.stream().map(user -> {
                 UserDTO dto = new UserDTO();
                 dto.setId(user.getId());
                 dto.setName(user.getName());
@@ -46,8 +41,8 @@ public class UserController implements Serializable {
                 dto.setPosition(user.getPosition());
                 dto.setPhone(user.getPhone());
                 dto.setBio(user.getBio());
-                userDTOs.add(dto);
-            }
+                return dto;
+            }).collect(Collectors.toList());
             return userDTOs;
         } catch (Exception e){
             LOGGER.error(e.getMessage(), e);

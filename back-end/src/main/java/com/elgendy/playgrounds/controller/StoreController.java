@@ -10,9 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @RestController
@@ -30,23 +29,19 @@ public class StoreController {
     @GetMapping("/")
     public List<StoreDTO> getAll(){
         List<Store> items = null;
-        List<StoreDTO> itemsDTO = null;
-        Iterator<Store> it = null;
+        List<StoreDTO> itemsDTOs = null;
         try{
             items = service.getAll();
-            itemsDTO = new ArrayList<>();
-            it = items.iterator();
-            while(it.hasNext()) {
-                Store item = it.next();
+            itemsDTOs = items.stream().map(item -> {
                 StoreDTO dto = new StoreDTO();
                 dto.setId(item.getId());
                 dto.setName(item.getName());
                 dto.setDescription(item.getDescription());
                 dto.setSerialNumber(item.getSerialNumber());
                 dto.setPrice(item.getPrice());
-                itemsDTO.add(dto);
-            }
-            return itemsDTO;
+                return dto;
+            }).collect(Collectors.toList());
+            return itemsDTOs;
         } catch (Exception e){
             LOGGER.error(e.getMessage(), e);
             throw new RuntimeException("Internal Server Error");

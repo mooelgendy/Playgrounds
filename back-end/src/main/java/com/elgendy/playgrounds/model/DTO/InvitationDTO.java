@@ -10,13 +10,13 @@ public class InvitationDTO {
 
     private Date date;
 
-    private String expiryDate;
+    private Date expiryDate;
 
 	public InvitationDTO() {
 		super();
 	}
 
-	public InvitationDTO(Integer id, String name, Date date, String expiryDate) {
+	public InvitationDTO(Integer id, String name, Date date, Date expiryDate) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -48,11 +48,11 @@ public class InvitationDTO {
 		this.date = date;
 	}
 
-	public String getExpiryDate() {
+	public Date getExpiryDate() {
 		return expiryDate;
 	}
 
-	public void setExpiryDate(String expiryDate) {
+	public void setExpiryDate(Date expiryDate) {
 		this.expiryDate = expiryDate;
 	}
 }
