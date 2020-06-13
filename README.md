@@ -4,16 +4,14 @@ By this web application you can find people to play with, playground location, c
 purchase sports products from playground store and more planed modules will be added to it. 
 
 Technology stack used in this web application:
-- Spring boot
-- Spring REST
-- Spring annotations
-- RESTful Web Service
-- Angular Framework
-- Bootstrap
-- Mysql DataBase
-- Hibernate
-- Maven Build tool
-
+- Spring Boot
+- RESTful Web Service with Spring REST
+- Spring Data
+- Hibernate/JPA
+- Mysql Database
+- Maven
+- JUnit & Mockito
+- Angular (Front-end will be added soon)
 
 Special thanks for JetBrains organization for their support <3 .
 
