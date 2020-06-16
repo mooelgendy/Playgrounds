@@ -1,5 +1,7 @@
 package com.elgendy.playgrounds.controller;
 
+import com.elgendy.playgrounds.exception.ApiNotFoundException;
+import com.elgendy.playgrounds.exception.InternalServerErrorException;
 import com.elgendy.playgrounds.model.DTO.StoreDTO;
 import com.elgendy.playgrounds.model.Store;
 import com.elgendy.playgrounds.service.StoreService;
@@ -20,6 +22,7 @@ public class StoreController {
 
     private StoreService service;
     private static Logger LOGGER = LoggerFactory.getLogger(StoreController.class);
+    private String exceptionMessage = "Error Occurred!";
 
     @Autowired
     public StoreController(StoreService service) {
@@ -44,7 +47,7 @@ public class StoreController {
             return itemsDTOs;
         } catch (Exception e){
             LOGGER.error(e.getMessage(), e);
-            throw new RuntimeException("Internal Server Error");
+            throw new InternalServerErrorException(exceptionMessage);
         }
     }
 
@@ -63,7 +66,11 @@ public class StoreController {
             return dto;
         } catch (Exception e){
             LOGGER.error(e.getMessage(), e);
-            throw new RuntimeException("Internal Server Error");
+            if (e instanceof NullPointerException){
+                throw new ApiNotFoundException("Item with Id: "+ id + " is not found");
+            } else {
+                throw new InternalServerErrorException(exceptionMessage);
+            }
         }
     }
 
@@ -80,7 +87,7 @@ public class StoreController {
             service.add(item);
         } catch (Exception e){
             LOGGER.error(e.getMessage(), e);
-            throw new RuntimeException("Internal Server Error");
+            throw new InternalServerErrorException(exceptionMessage);
         }
     }
 
@@ -98,7 +105,7 @@ public class StoreController {
             service.update(item);
         } catch (Exception e){
             LOGGER.error(e.getMessage(), e);
-            throw new RuntimeException("Internal Server Error");
+            throw new InternalServerErrorException(exceptionMessage);
         }
     }
 
@@ -109,7 +116,7 @@ public class StoreController {
             service.delete(id);
         } catch (Exception e){
             LOGGER.error(e.getMessage(), e);
-            throw new RuntimeException("Internal Server Error");
+            throw new InternalServerErrorException(exceptionMessage);
         }
     }
 }

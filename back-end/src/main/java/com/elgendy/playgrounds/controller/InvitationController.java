@@ -5,6 +5,8 @@ import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
+import com.elgendy.playgrounds.exception.ApiNotFoundException;
+import com.elgendy.playgrounds.exception.InternalServerErrorException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,7 @@ public class InvitationController {
 
 	private InvitationService service;
     private static Logger LOGGER = LoggerFactory.getLogger(InvitationController.class);
+    private String exceptionMessage = "Error Occurred!";
 
     @Autowired
     public InvitationController(InvitationService service) {
@@ -45,7 +48,7 @@ public class InvitationController {
             return invitationDTOs;
         } catch (Exception e){
             LOGGER.error(e.getMessage(), e);
-            throw new RuntimeException("Internal Server Error");
+            throw new InternalServerErrorException(exceptionMessage);
         }
     }
 
@@ -63,7 +66,11 @@ public class InvitationController {
             return dto;
         } catch (Exception e){
             LOGGER.error(e.getMessage(), e);
-            throw new RuntimeException("Internal Server Error");
+            if (e instanceof NullPointerException){
+                throw new ApiNotFoundException("Invitation with Id: "+ id + " is not found");
+            } else {
+                throw new InternalServerErrorException(exceptionMessage);
+            }
         }
     }
 
@@ -79,7 +86,7 @@ public class InvitationController {
             service.add(invitation);
         } catch (Exception e){
             LOGGER.error(e.getMessage(), e);
-            throw new RuntimeException("Internal Server Error");
+            throw new InternalServerErrorException(exceptionMessage);
         }
     }
 
@@ -96,7 +103,7 @@ public class InvitationController {
             service.update(invitation);
         } catch (Exception e){
             LOGGER.error(e.getMessage(), e);
-            throw new RuntimeException("Internal Server Error");
+            throw new InternalServerErrorException(exceptionMessage);
         }
 
     }
@@ -109,7 +116,7 @@ public class InvitationController {
             service.delete(id);
         } catch (Exception e){
             LOGGER.error(e.getMessage(), e);
-            throw new RuntimeException("Internal Server Error");
+            throw new InternalServerErrorException(exceptionMessage);
         }
     }
 }

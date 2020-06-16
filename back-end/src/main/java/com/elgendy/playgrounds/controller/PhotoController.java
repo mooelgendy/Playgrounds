@@ -1,5 +1,7 @@
 package com.elgendy.playgrounds.controller;
 
+import com.elgendy.playgrounds.exception.ApiNotFoundException;
+import com.elgendy.playgrounds.exception.InternalServerErrorException;
 import com.elgendy.playgrounds.model.DTO.PhotoDTO;
 import com.elgendy.playgrounds.model.Photo;
 import com.elgendy.playgrounds.service.PhotoService;
@@ -22,6 +24,7 @@ public class PhotoController implements Serializable {
 
     private PhotoService service;
     private static Logger LOGGER = LoggerFactory.getLogger(PhotoController.class);
+    private String exceptionMessage = "Error Occurred!";
 
     @Autowired
     public PhotoController(PhotoService service) {
@@ -44,7 +47,7 @@ public class PhotoController implements Serializable {
             return photoDTOs;
         } catch (Exception e){
             LOGGER.error(e.getMessage(), e);
-            throw new RuntimeException("Internal Server Error");
+            throw new InternalServerErrorException(exceptionMessage);
         }
     }
 
@@ -61,7 +64,11 @@ public class PhotoController implements Serializable {
             return dto;
         } catch (Exception e){
             LOGGER.error(e.getMessage(), e);
-            throw new RuntimeException("Internal Server Error");
+            if (e instanceof NullPointerException){
+                throw new ApiNotFoundException("Photo with Id: "+ id + " is not found");
+            } else {
+                throw new InternalServerErrorException(exceptionMessage);
+            }
         }
     }
 
@@ -76,7 +83,7 @@ public class PhotoController implements Serializable {
             service.add(photo);
         } catch (Exception e){
             LOGGER.error(e.getMessage(), e);
-            throw new RuntimeException("Internal Server Error");
+            throw new InternalServerErrorException(exceptionMessage);
         }
     }
 
@@ -92,7 +99,7 @@ public class PhotoController implements Serializable {
             service.update(photo);
         } catch (Exception e){
             LOGGER.error(e.getMessage(), e);
-            throw new RuntimeException("Internal Server Error");
+            throw new InternalServerErrorException(exceptionMessage);
         }
     }
 
@@ -104,7 +111,7 @@ public class PhotoController implements Serializable {
             service.delete(id);
         } catch (Exception e){
             LOGGER.error(e.getMessage(), e);
-            throw new RuntimeException("Internal Server Error");
+            throw new InternalServerErrorException(exceptionMessage);
         }
     }
 }

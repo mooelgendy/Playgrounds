@@ -1,5 +1,7 @@
 package com.elgendy.playgrounds.controller;
 
+import com.elgendy.playgrounds.exception.ApiNotFoundException;
+import com.elgendy.playgrounds.exception.InternalServerErrorException;
 import com.elgendy.playgrounds.model.DTO.TeamDTO;
 import com.elgendy.playgrounds.model.Team;
 import com.elgendy.playgrounds.service.TeamService;
@@ -21,6 +23,7 @@ public class TeamController implements Serializable {
 
     private TeamService service;
     private static Logger LOGGER = LoggerFactory.getLogger(TeamController.class);
+    private String exceptionMessage = "Error Occurred!";
 
     @Autowired
     public TeamController(TeamService service) {
@@ -44,7 +47,7 @@ public class TeamController implements Serializable {
             return teamDTOs;
         } catch (Exception e){
             LOGGER.error(e.getMessage(), e);
-            throw new RuntimeException("Internal Server Error");
+            throw new InternalServerErrorException(exceptionMessage);
         }
     }
 
@@ -62,7 +65,11 @@ public class TeamController implements Serializable {
             return dto;
         } catch (Exception e){
             LOGGER.error(e.getMessage(), e);
-            throw new RuntimeException("Internal Server Error");
+            if (e instanceof NullPointerException){
+                throw new ApiNotFoundException("Team with Id: "+ id + " is not found");
+            } else {
+                throw new InternalServerErrorException(exceptionMessage);
+            }
         }
     }
 
@@ -78,7 +85,7 @@ public class TeamController implements Serializable {
             service.add(team);
         } catch (Exception e){
             LOGGER.error(e.getMessage(), e);
-            throw new RuntimeException("Internal Server Error");
+            throw new InternalServerErrorException(exceptionMessage);
         }
     }
 
@@ -95,7 +102,7 @@ public class TeamController implements Serializable {
             service.update(team);
         } catch (Exception e){
             LOGGER.error(e.getMessage(), e);
-            throw new RuntimeException("Internal Server Error");
+            throw new InternalServerErrorException(exceptionMessage);
         }
     }
 
@@ -106,7 +113,7 @@ public class TeamController implements Serializable {
             service.delete(id);
         } catch (Exception e){
             LOGGER.error(e.getMessage(), e);
-            throw new RuntimeException("Internal Server Error");
+            throw new InternalServerErrorException(exceptionMessage);
         }
     }
 }

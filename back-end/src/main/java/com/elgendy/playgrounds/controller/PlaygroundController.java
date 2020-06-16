@@ -1,5 +1,7 @@
 package com.elgendy.playgrounds.controller;
 
+import com.elgendy.playgrounds.exception.ApiNotFoundException;
+import com.elgendy.playgrounds.exception.InternalServerErrorException;
 import com.elgendy.playgrounds.model.DTO.PlaygroundDTO;
 import com.elgendy.playgrounds.model.Playground;
 import com.elgendy.playgrounds.service.PlaygroundService;
@@ -21,6 +23,7 @@ public class PlaygroundController implements Serializable {
 
     private PlaygroundService service;
     private static Logger LOGGER = LoggerFactory.getLogger(PlaygroundController.class);
+    private String exceptionMessage = "Error Occurred!";
 
     @Autowired
     public PlaygroundController(PlaygroundService service) {
@@ -48,7 +51,7 @@ public class PlaygroundController implements Serializable {
             return playgroundDTOs;
         } catch (Exception e){
             LOGGER.error(e.getMessage(), e);
-            throw new RuntimeException("Internal Server Error");
+            throw new InternalServerErrorException(exceptionMessage);
         }
     }
 
@@ -70,7 +73,11 @@ public class PlaygroundController implements Serializable {
             return dto;
         } catch (Exception e){
             LOGGER.error(e.getMessage(), e);
-            throw new RuntimeException("Internal Server Error");
+            if (e instanceof NullPointerException){
+                throw new ApiNotFoundException("Playground with Id: "+ id + " is not found");
+            } else {
+                throw new InternalServerErrorException(exceptionMessage);
+            }
         }
     }
 
@@ -90,7 +97,7 @@ public class PlaygroundController implements Serializable {
             service.add(playground);
         } catch (Exception e){
             LOGGER.error(e.getMessage(), e);
-            throw new RuntimeException("Internal Server Error");
+            throw new InternalServerErrorException(exceptionMessage);
         }
     }
 
@@ -111,7 +118,7 @@ public class PlaygroundController implements Serializable {
             service.update(playground);
         } catch (Exception e){
             LOGGER.error(e.getMessage(), e);
-            throw new RuntimeException("Internal Server Error");
+            throw new InternalServerErrorException(exceptionMessage);
         }
     }
 
@@ -123,7 +130,7 @@ public class PlaygroundController implements Serializable {
             service.delete(id);
         } catch (Exception e){
             LOGGER.error(e.getMessage(), e);
-            throw new RuntimeException("Internal Server Error");
+            throw new InternalServerErrorException(exceptionMessage);
         }
     }
 }

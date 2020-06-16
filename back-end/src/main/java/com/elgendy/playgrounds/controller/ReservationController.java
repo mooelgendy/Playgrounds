@@ -1,5 +1,7 @@
 package com.elgendy.playgrounds.controller;
 
+import com.elgendy.playgrounds.exception.ApiNotFoundException;
+import com.elgendy.playgrounds.exception.InternalServerErrorException;
 import com.elgendy.playgrounds.model.DTO.ReservationDTO;
 import com.elgendy.playgrounds.model.Reservation;
 import com.elgendy.playgrounds.service.ReservationService;
@@ -21,6 +23,8 @@ public class ReservationController implements Serializable {
 
     private ReservationService service;
     private static Logger LOGGER = LoggerFactory.getLogger(ReservationController.class);
+    private String exceptionMessage = "Error Occurred!";
+
 
     @Autowired
     public ReservationController(ReservationService service) {
@@ -45,7 +49,7 @@ public class ReservationController implements Serializable {
             return reservationDTOs;
         } catch (Exception e){
             LOGGER.error(e.getMessage(), e);
-            throw new RuntimeException("Internal Server Error");
+            throw new InternalServerErrorException(exceptionMessage);
         }
     }
 
@@ -64,7 +68,11 @@ public class ReservationController implements Serializable {
             return dto;
         } catch (Exception e){
             LOGGER.error(e.getMessage(), e);
-            throw new RuntimeException("Internal Server Error");
+            if (e instanceof NullPointerException){
+                throw new ApiNotFoundException("Reservation with Id: "+ id + " is not found");
+            } else {
+                throw new InternalServerErrorException(exceptionMessage);
+            }
         }
     }
 
@@ -81,7 +89,7 @@ public class ReservationController implements Serializable {
             service.add(reservation);
         } catch (Exception e){
             LOGGER.error(e.getMessage(), e);
-            throw new RuntimeException("Internal Server Error");
+            throw new InternalServerErrorException(exceptionMessage);
         }
     }
 
@@ -98,7 +106,7 @@ public class ReservationController implements Serializable {
             service.update(reservation);
         } catch (Exception e){
             LOGGER.error(e.getMessage(), e);
-            throw new RuntimeException("Internal Server Error");
+            throw new InternalServerErrorException(exceptionMessage);
         }
     }
 
@@ -109,7 +117,7 @@ public class ReservationController implements Serializable {
             service.delete(id);
         } catch (Exception e){
             LOGGER.error(e.getMessage(), e);
-            throw new RuntimeException("Internal Server Error");
+            throw new InternalServerErrorException(exceptionMessage);
         }
     }
 }

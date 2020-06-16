@@ -1,5 +1,7 @@
 package com.elgendy.playgrounds.controller;
 
+import com.elgendy.playgrounds.exception.ApiNotFoundException;
+import com.elgendy.playgrounds.exception.InternalServerErrorException;
 import com.elgendy.playgrounds.model.DTO.UserDTO;
 import com.elgendy.playgrounds.model.User;
 import com.elgendy.playgrounds.service.UserService;
@@ -21,6 +23,7 @@ public class UserController implements Serializable {
 
     private UserService service;
     private static Logger LOGGER = LoggerFactory.getLogger(UserController.class);
+    private String exceptionMessage = "Error Occurred!";
 
     @Autowired
     public UserController(UserService service) {
@@ -46,7 +49,7 @@ public class UserController implements Serializable {
             return userDTOs;
         } catch (Exception e){
             LOGGER.error(e.getMessage(), e);
-            throw new RuntimeException("Internal Server Error");
+            throw new InternalServerErrorException(exceptionMessage);
         }
     }
 
@@ -66,7 +69,11 @@ public class UserController implements Serializable {
             return dto;
         } catch (Exception e){
             LOGGER.error(e.getMessage(), e);
-            throw new RuntimeException("Internal Server Error");
+            if (e instanceof NullPointerException){
+                throw new ApiNotFoundException("User with Id: "+ id + " is not found");
+            } else {
+                throw new InternalServerErrorException(exceptionMessage);
+            }
         }
     }
 
@@ -84,7 +91,7 @@ public class UserController implements Serializable {
             service.add(user);
         } catch (Exception e){
             LOGGER.error(e.getMessage(), e);
-            throw new RuntimeException("Internal Server Error");
+            throw new InternalServerErrorException(exceptionMessage);
         }
     }
 
@@ -103,7 +110,7 @@ public class UserController implements Serializable {
             service.update(user);
         } catch (Exception e){
             LOGGER.error(e.getMessage(), e);
-            throw new RuntimeException("Internal Server Error");
+            throw new InternalServerErrorException(exceptionMessage);
         }
 
     }
@@ -115,7 +122,7 @@ public class UserController implements Serializable {
             service.delete(id);
         } catch (Exception e){
             LOGGER.error(e.getMessage(), e);
-            throw new RuntimeException("Internal Server Error");
+            throw new InternalServerErrorException(exceptionMessage);
         }
 
     }
